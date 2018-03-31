@@ -24,12 +24,13 @@ Use conditional statements as expressions, instead of awkward nested ternaries:
 
 ```js
 let x = do {
-  if (foo())
+  if (foo()) {
     a()
-  else if (bar())
+  } else if (bar()) {
     b()
-  else
+  } else {
     c()
+  }
 };
 ```
 
@@ -43,15 +44,12 @@ return (
       do {
         if (!loggedIn) {
           <LoginButton />
-        } else {
-          if (membershipStatus === 'basic') {
+        } else if (membershipStatus === 'basic') {
             <UpgradeButton />
-          } else if (membershipStatus === 'premium') {
-            <PremiumBadge />
-          } else {
-            alertUserOfPaymentIssues()
-            <CheckPaymentInfoButton />
-          }
+        } else if (membershipStatus === 'premium') {
+          <PremiumBadge />
+        } else {
+          <CheckPaymentInfoButton />
         }
       }
     }
