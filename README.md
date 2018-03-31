@@ -15,7 +15,7 @@ Write in an expression-oriented style, scoping variables as locally as possible:
 
 ```js
 let x = do {
-  let tmp = f();
+  let tmp = f()
   tmp * tmp + 1
 };
 ```
@@ -24,9 +24,12 @@ Use conditional statements as expressions, instead of awkward nested ternaries:
 
 ```js
 let x = do {
-  if (foo()) { f() }
-  else if (bar()) { g() }
-  else { h() }
+  if (foo())
+    a()
+  else if (bar())
+    b()
+  else
+    c()
 };
 ```
 
@@ -38,10 +41,17 @@ return (
     <Home />
     {
       do {
-        if (loggedIn) {
-          <LogoutButton />
-        } else {
+        if (!loggedIn) {
           <LoginButton />
+        } else {
+          if (membershipStatus === 'basic') {
+            <UpgradeButton />
+          } else if (membershipStatus === 'premium') {
+            <PremiumBadge />
+          } else {
+            alertUserOfPaymentIssues()
+            <CheckPaymentInfoButton />
+          }
         }
       }
     }
@@ -62,7 +72,7 @@ return (
 How to avoid either parsing conflict in statement context with `do`-`while`, or dangling-else type of ambiguity:
 
 ```js
-do do f(); while (x);
+do do f(); while (x)
 ```
 
 I have several alternatives I intend to explore here.
