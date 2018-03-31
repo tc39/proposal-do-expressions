@@ -60,8 +60,8 @@ return (
 ## Tennant's Correspondence Principle
 
 * key refactoring principles:
-  * `do { <expr>; }` equivalent to `<expr>`
-  * `(do { <stmt> };)` equivalent to `{ <stmt> }`
+  * `do { <expr> }` equivalent to `<expr>`
+  * `(do { <stmt> })` equivalent to `{ <stmt> }`
 * this semantic transparency is demonstrated by the semantics:
   1. Return the result of evaluating _Body_.
 
