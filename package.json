@@ -1,0 +1,34 @@
+{
+	"name": "ecma-proposal-do-expressions",
+	"version": "0.0.0",
+	"description": "ECMAScript spec proposal for `do`",
+	"scripts": {
+		"build": "ecmarkup spec.emu | js-beautify -f - --type=html -t > index.html",
+		"prepublish": "npm run build && echo >&2 'no publishing' && exit 255"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tc39/proposal-do-expressions.git"
+	},
+	"keywords": [
+		"do",
+		"expressions",
+		"ES7",
+		"ES2016",
+		"ECMAScript",
+		"ESNext",
+		"spec",
+		"proposal"
+	],
+	"author": "Dave Herman <david.herman@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/tc39/proposal-do-expressions/issues"
+	},
+	"homepage": "https://github.com/tc39/proposal-do-expressions#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"ecmarkup": "^3.16.0",
+		"js-beautify": "^1.8.6"
+	}
+}
