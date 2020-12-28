@@ -1,19 +1,24 @@
 <!doctype html>
 <head><meta charset="utf-8">
-<title>Do-expressions</title><script type="application/json" id="menu-search-biblio">[]</script><script>"use strict";
+<title>do expressions</title><script type="application/json" id="menu-search-biblio">[{"type":"clause","id":"sec-intro","aoid":null,"title":"Introduction","titleHTML":"Introduction","number":"","namespace":"<no location>","location":"","referencingIds":[],"key":"Introduction"},{"type":"production","id":"prod-DoExpression","name":"DoExpression","referencingIds":["_ref_0"],"namespace":"<no location>","location":"","key":"DoExpression"},{"type":"clause","id":"sec-doexpression-runtime-semantics-evaluation","aoid":null,"title":"Runtime Semantics: Evaluation","titleHTML":"Runtime Semantics: Evaluation","number":"1.1","namespace":"<no location>","location":"","referencingIds":[],"key":"Runtime Semantics: Evaluation"},{"type":"clause","id":"sec-doexpression-static-semantics-early-errors","aoid":null,"title":"Static Semantics: Early Errors","titleHTML":"Static Semantics: Early Errors","number":"1.2","namespace":"<no location>","location":"","referencingIds":[],"key":"Static Semantics: Early Errors"},{"type":"clause","id":"sec-do","aoid":null,"title":"Do Expressions","titleHTML":"Do Expressions","number":"1","namespace":"<no location>","location":"","referencingIds":[],"key":"Do Expressions"},{"type":"production","id":"prod-PrimaryExpression","name":"PrimaryExpression","referencingIds":[],"namespace":"<no location>","location":"","key":"PrimaryExpression"},{"type":"production","id":"prod-ExpressionStatement","name":"ExpressionStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"ExpressionStatement"},{"type":"clause","id":"sec-integration","aoid":null,"title":"Integration","titleHTML":"Integration","number":"2","namespace":"<no location>","location":"","referencingIds":[],"key":"Integration"},{"type":"clause","id":"sec-copyright-and-software-license","aoid":null,"title":"Copyright & Software License","titleHTML":"Copyright &amp; Software License","number":"A","namespace":"<no location>","location":"","referencingIds":[],"key":"Copyright & Software License"}]</script><script>"use strict";
 
 function Search(menu) {
   this.menu = menu;
   this.$search = document.getElementById('menu-search');
   this.$searchBox = document.getElementById('menu-search-box');
   this.$searchResults = document.getElementById('menu-search-results');
-  
+
   this.loadBiblio();
-  
+
   document.addEventListener('keydown', this.documentKeydown.bind(this));
-  
+
   this.$searchBox.addEventListener('keydown', debounce(this.searchBoxKeydown.bind(this), { stopPropagation: true }));
   this.$searchBox.addEventListener('keyup', debounce(this.searchBoxKeyup.bind(this), { stopPropagation: true }));
+
+  // Perform an initial search if the box is not empty.
+  if (this.$searchBox.value) {
+    this.search(this.$searchBox.value);
+  }
 }
 
 Search.prototype.loadBiblio = function () {
@@ -53,7 +58,7 @@ Search.prototype.searchBoxKeyup = function (e) {
   if (e.keyCode === 13 || e.keyCode === 9) {
     return;
   }
-  
+
   this.search(e.target.value);
 }
 
@@ -76,25 +81,23 @@ Search.prototype.triggerSearch = function (e) {
 // prefer shorter matches.
 function relevance(result, searchString) {
   var relevance = 0;
-  
+
   relevance = Math.max(0, 8 - result.match.chunks) << 7;
-  
+
   if (result.match.caseMatch) {
     relevance *= 2;
   }
-  
+
   if (result.match.prefix) {
     relevance += 2048
   }
-  
+
   relevance += Math.max(0, 255 - result.entry.key.length);
-  
+
   return relevance;
 }
 
 Search.prototype.search = function (searchString) {
-  var s = Date.now();
-
   if (searchString === '') {
     this.displayResults([]);
     this.hideSearch();
@@ -102,12 +105,12 @@ Search.prototype.search = function (searchString) {
   } else {
     this.showSearch();
   }
-  
+
   if (searchString.length === 1) {
     this.displayResults([]);
     return;
   }
-    
+
   var results;
 
   if (/^[\d\.]*$/.test(searchString)) {
@@ -118,20 +121,24 @@ Search.prototype.search = function (searchString) {
     });
   } else {
     results = [];
-    
+
     for (var i = 0; i < this.biblio.length; i++) {
       var entry = this.biblio[i];
-  
+      if (!entry.key) {
+        // biblio entries without a key aren't searchable
+        continue;
+      }
+
       var match = fuzzysearch(searchString, entry.key);
       if (match) {
         results.push({ entry: entry, match: match });
       }
     }
-  
+
     results.forEach(function (result) {
       result.relevance = relevance(result, searchString);
     });
-    
+
     results = results.sort(function (a, b) { return b.relevance - a.relevance });
 
   }
@@ -139,7 +146,7 @@ Search.prototype.search = function (searchString) {
   if (results.length > 50) {
     results = results.slice(0, 50);
   }
-  
+
   this.displayResults(results);
 }
 Search.prototype.hideSearch = function () {
@@ -156,7 +163,7 @@ Search.prototype.selectResult = function () {
   if ($first) {
     document.location = $first.getAttribute('href');
   }
-  
+
   this.$searchBox.value = '';
   this.$searchBox.blur();
   this.displayResults([]);
@@ -170,7 +177,7 @@ Search.prototype.selectResult = function () {
 Search.prototype.displayResults = function (results) {
   if (results.length > 0) {
     this.$searchResults.classList.remove('no-results');
-    
+
     var html = '<ul>';
 
     results.forEach(function (result) {
@@ -187,7 +194,7 @@ Search.prototype.displayResults = function (results) {
       } else if (entry.type === 'production') {
         text = entry.key;
         cssClass = 'prod';
-        id = entry.id;  
+        id = entry.id;
       } else if (entry.type === 'op') {
         text = entry.key;
         cssClass = 'op';
@@ -199,7 +206,7 @@ Search.prototype.displayResults = function (results) {
       }
 
       if (text) {
-        html += '<li class=menu-search-result-' + cssClass + '><a href="#' + id + '">' + text + '</a></li>'
+        html += '<li class=menu-search-result-' + cssClass + '><a href="#' + id + '">' + text + '</a></li>';
       }
     });
 
@@ -222,7 +229,7 @@ function Menu() {
   this.$toc = document.querySelector('#menu-toc > ol');
   this.$specContainer = document.getElementById('spec-container');
   this.search = new Search(this);
-  
+
   this._pinnedIds = {}; 
   this.loadPinEntries();
 
@@ -267,9 +274,9 @@ function Menu() {
                     && target.offsetHeight + target.scrollTop >= target.scrollHeight;
 
     if (offBottom) {
-		  e.preventDefault();
-	  }
-  })
+      e.preventDefault();
+    }
+  });
 }
 
 Menu.prototype.documentKeydown = function (e) {
@@ -296,7 +303,7 @@ Menu.prototype.revealInToc = function (path) {
     current[i].classList.remove('revealed');
     current[i].classList.remove('revealed-leaf');
   }
-  
+
   var current = this.$toc;
   var index = 0;
   while (index < path.length) {
@@ -307,7 +314,7 @@ Menu.prototype.revealInToc = function (path) {
         if (index === path.length - 1) {
           children[i].classList.add('revealed-leaf');
           var rect = children[i].getBoundingClientRect();
-          this.$toc.getBoundingClientRect().top
+          // this.$toc.getBoundingClientRect().top;
           var tocRect = this.$toc.getBoundingClientRect();
           if (rect.top + 10 > tocRect.bottom) {
             this.$toc.scrollTop = this.$toc.scrollTop + (rect.top - tocRect.bottom) + (rect.bottom - rect.top);
@@ -318,29 +325,27 @@ Menu.prototype.revealInToc = function (path) {
         current = children[i].querySelector('ol');
         index++;
         break;
-      }      
+      }
     }
-    
+
   }
 }
 
 function findActiveClause(root, path) {
   var clauses = new ClauseWalker(root);
   var $clause;
-  var found = false;
   var path = path || [];
-  
+
   while ($clause = clauses.nextNode()) {
     var rect = $clause.getBoundingClientRect();
-    var $header = $clause.children[0];
+    var $header = $clause.querySelector("h1");
     var marginTop = parseInt(getComputedStyle($header)["margin-top"]);
-    
+
     if ((rect.top - marginTop) <= 0 && rect.bottom > 0) {
-      found = true;
       return findActiveClause($clause, path.concat($clause)) || path;
     }
   }
-  
+
   return path;
 }
 
@@ -365,7 +370,7 @@ function ClauseWalker(root) {
     },
     false
     );
-  
+
   return treeWalker;
 }
 
@@ -448,7 +453,7 @@ Menu.prototype.loadPinEntries = function () {
   } catch (e) {
     return;
   }
-  
+
   var pinsString = window.localStorage.pinEntries;
   if (!pinsString) return;
   var pins = JSON.parse(pinsString);
@@ -479,6 +484,11 @@ function init() {
   var $container = document.getElementById('spec-container');
   $container.addEventListener('mouseover', debounce(function (e) {
     Toolbox.activateIfMouseOver(e);
+  }));
+  document.addEventListener('keydown', debounce(function (e) {
+    if (e.code === "Escape" && Toolbox.active) {
+      Toolbox.deactivate();
+    }
   }));
 }
 
@@ -578,12 +588,11 @@ function fuzzysearch (searchString, haystack, caseInsensitive) {
   var qlen = searchString.length;
   var chunks = 1;
   var finding = false;
-  var prefix = true;
-  
+
   if (qlen > tlen) {
     return false;
   }
-  
+
   if (qlen === tlen) {
     if (searchString === haystack) {
       return { caseMatch: true, chunks: 1, prefix: true };
@@ -593,7 +602,7 @@ function fuzzysearch (searchString, haystack, caseInsensitive) {
       return false;
     }
   }
-  
+
   outer: for (var i = 0, j = 0; i < qlen; i++) {
     var nch = searchString[i];
     while (j < tlen) {
@@ -607,12 +616,12 @@ function fuzzysearch (searchString, haystack, caseInsensitive) {
         finding = false;
       }
     }
-    
-    if (caseInsensitive) { return false }
-    
+
+    if (caseInsensitive) { return false; }
+
     return fuzzysearch(searchString.toLowerCase(), haystack.toLowerCase(), true);
   }
-  
+
   return { caseMatch: !caseInsensitive, chunks: chunks, prefix: j <= qlen };
 }
 
@@ -769,7 +778,6 @@ var referencePane = {
       var target = document.getElementById(id);
       var cid = findParentClauseId(target);
       var clause = menu.search.biblio.byId[cid];
-      var dupCount = 0;
       return { id: id, clause: clause }
     }).sort(function (a, b) {
       return sortByClauseNumber(a.clause, b.clause);
@@ -809,7 +817,7 @@ function sortByClauseNumber(c1, c2) {
     if (i >= c2c.length) {
       return 1;
     }
-    
+
     var c1 = c1c[i];
     var c2 = c2c[i];
     var c1cn = Number(c1);
@@ -969,16 +977,43 @@ emu-const {
 emu-val {
   font-weight: bold;
 }
-emu-alg ol, emu-alg ol ol ol ol {
-    list-style-type: decimal;
+
+/* depth 1 */
+emu-alg ol,
+/* depth 4 */
+emu-alg ol ol ol ol,
+emu-alg ol.nested-thrice,
+emu-alg ol.nested-twice ol,
+emu-alg ol.nested-once ol ol {
+  list-style-type: decimal;
 }
 
-emu-alg ol ol, emu-alg ol ol ol ol ol {
-    list-style-type: lower-alpha;
+/* depth 2 */
+emu-alg ol ol,
+emu-alg ol.nested-once,
+/* depth 5 */
+emu-alg ol ol ol ol ol,
+emu-alg ol.nested-four-times,
+emu-alg ol.nested-thrice ol,
+emu-alg ol.nested-twice ol ol,
+emu-alg ol.nested-once ol ol ol {
+  list-style-type: lower-alpha;
 }
 
-emu-alg ol ol ol, ol ol ol ol ol ol {
-    list-style-type: lower-roman;
+/* depth 3 */
+emu-alg ol ol ol,
+emu-alg ol.nested-twice,
+emu-alg ol.nested-once ol,
+/* depth 6 */
+emu-alg ol ol ol ol ol ol,
+emu-alg ol.nested-lots,
+emu-alg ol.nested-four-times ol,
+emu-alg ol.nested-thrice ol ol,
+emu-alg ol.nested-twice ol ol ol,
+emu-alg ol.nested-once ol ol ol ol,
+/* depth 7+ */
+emu-alg ol.nested-lots ol {
+  list-style-type: lower-roman;
 }
 
 emu-eqn {
@@ -1029,6 +1064,10 @@ emu-note > div.note-contents > p:last-of-type {
   margin-bottom: 0;
 }
 
+emu-table td code {
+  white-space: normal;
+} 
+
 emu-figure {
   display: block;
 }
@@ -1053,6 +1092,10 @@ emu-table figure {
 
 emu-production {
     display: block;
+}
+
+emu-grammar[type="example"] emu-production,
+emu-grammar[type="definition"] emu-production {
     margin-top: 1em;
     margin-bottom: 1em;
     margin-left: 5ex;
@@ -1060,9 +1103,15 @@ emu-production {
 
 emu-grammar.inline, emu-production.inline,
 emu-grammar.inline emu-production emu-rhs, emu-production.inline emu-rhs,
-emu-grammar[collapsed] emu-production emu-rhs, emu-production[collapsed] emu-rhs {
+emu-grammar[collapsed] emu-production emu-rhs {
     display: inline;
     padding-left: 1ex;
+    margin-left: 0;
+}
+
+emu-production[collapsed] emu-rhs {
+    display: inline;
+    padding-left: .5ex;
     margin-left: 0;
 }
 
@@ -1072,26 +1121,27 @@ emu-grammar[collapsed] emu-production, emu-production[collapsed] {
 
 emu-constraints {
     font-size: .75em;
-    margin-right: 1ex;
+    margin-right: .5ex;
 }
 
 emu-gann {
-    margin-right: 1ex;
+    margin-right: .5ex;
 }
 
 emu-gann emu-t:last-child,
+emu-gann emu-gprose:last-child,
 emu-gann emu-nt:last-child {
     margin-right: 0;
 }
 
 emu-geq {
-    margin-left: 1ex;
+    margin-left: .5ex;
     font-weight: bold;
 }
 
 emu-oneof {
     font-weight: bold;
-    margin-left: 1ex;
+    margin-left: .5ex;
 }
 
 emu-nt {
@@ -1106,7 +1156,7 @@ emu-nt a, emu-nt a:visited {
 }
 
 emu-rhs emu-nt {
-    margin-right: 1ex;
+    margin-right: .5ex;
 }
 
 emu-t {
@@ -1118,7 +1168,7 @@ emu-t {
 }
 
 emu-production emu-t {
-    margin-right: 1ex;
+    margin-right: .5ex;
 }
 
 emu-rhs {
@@ -1132,10 +1182,6 @@ emu-mods {
     vertical-align: sub;
     font-style: normal;
     font-weight: normal;
-}
-
-emu-production[collapsed] emu-mods {
-  display: none;
 }
 
 emu-params, emu-opt {
@@ -1154,6 +1200,10 @@ emu-opt {
 emu-gprose {
     font-size: 0.9em;
     font-family: Helvetica, Arial, sans-serif;
+}
+
+emu-production emu-gprose {
+    margin-right: 1ex;
 }
 
 h1.shortname {
@@ -1183,7 +1233,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 .secnum {
   text-decoration: none;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 h1 span.title {
@@ -1324,6 +1374,9 @@ ins.block, del.block,
 emu-production > ins, emu-production > del,
 emu-grammar > ins, emu-grammar > del {
   display: block;
+}
+emu-rhs > ins, emu-rhs > del { 
+  display: inline;
 }
 
 tr.ins > td > ins {
@@ -1789,17 +1842,101 @@ li.menu-search-result-term:before {
   text-align: right;
   padding-right: 5px;
 }
-</style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"></ol></div></div><div id="spec-container"><h1 class="version first">Stage 1 Draft / September 13, 2017</h1><h1 class="title">Do-expressions</h1>
-<style>
-  hr {
-    height: 0.25em;
-    background: #ccc;
-    border: 0;
-    margin: 2em 0;
+
+@media print {
+  #menu-toggle {
+    display: none; 
   }
+}
+</style></head><body><div id="menu-toggle">☰</div><div id="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins</div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-intro" title="Introduction">Introduction</a></li><li><span class="item-toggle">◢</span><a href="#sec-do" title="Do Expressions"><span class="secnum">1</span> Do Expressions</a><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-doexpression-runtime-semantics-evaluation" title="Runtime Semantics: Evaluation"><span class="secnum">1.1</span> RS: Evaluation</a></li><li><span class="item-toggle-none"></span><a href="#sec-doexpression-static-semantics-early-errors" title="Static Semantics: Early Errors"><span class="secnum">1.2</span> SS: Early Errors</a></li></ol></li><li><span class="item-toggle-none"></span><a href="#sec-integration" title="Integration"><span class="secnum">2</span> Integration</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version first">Stage 1 Draft / December 28, 2020</h1><h1 class="title">do expressions</h1>
 
-</style>
+<emu-intro id="sec-intro">
+  <h1>Introduction</h1>
+  <p><code>do</code> expressions are a syntactic construct which allows putting (some) statements in expression position without needing an immediately-invoked function expression.</p>
+</emu-intro>
 
-<p>initial add</p>
+<emu-clause id="sec-do">
+  <h1><span class="secnum">1</span> Do Expressions</h1>
+  <h2>Syntax</h2>
+  <emu-grammar type="definition"><emu-production name="DoExpression" params="Yield, Await" id="prod-DoExpression">
+    <emu-nt params="Yield, Await"><a href="#prod-DoExpression">DoExpression</a><emu-mods><emu-params>[Yield, Await]</emu-params></emu-mods></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="2367ffe6">
+        <emu-t>do</emu-t>
+        <emu-nt params="?Yield, ?Await, ~Return"><a href="https://tc39.es/ecma262/#prod-annexB-Block">Block</a><emu-mods><emu-params>[?Yield, ?Await, ~Return]</emu-params></emu-mods></emu-nt>
+    </emu-rhs>
+</emu-production>
+</emu-grammar>
 
-</div></body>
+  <emu-clause id="sec-doexpression-runtime-semantics-evaluation">
+    <h1><span class="secnum">1.1</span> Runtime Semantics: Evaluation</h1>
+    <emu-grammar><emu-production name="DoExpression" collapsed="">
+    <emu-nt><a href="#prod-DoExpression">DoExpression</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="288d8cb1">
+        <emu-t>do</emu-t>
+        <emu-nt><a href="https://tc39.es/ecma262/#prod-annexB-Block">Block</a></emu-nt>
+    </emu-rhs>
+</emu-production>
+</emu-grammar>
+    <emu-alg><ol><li>Return the result of evaluating <emu-nt><a href="https://tc39.es/ecma262/#prod-annexB-Block">Block</a></emu-nt>.</li></ol></emu-alg>
+  </emu-clause>
+
+  <emu-clause id="sec-doexpression-static-semantics-early-errors">
+    <h1><span class="secnum">1.2</span> Static Semantics: Early Errors</h1>
+    <emu-grammar><emu-production name="DoExpression" collapsed="">
+    <emu-nt><a href="#prod-DoExpression">DoExpression</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="288d8cb1">
+        <emu-t>do</emu-t>
+        <emu-nt><a href="https://tc39.es/ecma262/#prod-annexB-Block">Block</a></emu-nt>
+    </emu-rhs>
+</emu-production>
+</emu-grammar>
+    <ul>
+      <li>
+        It is a Syntax Error if ContainsUndefinedBreakTarget of <emu-nt><a href="https://tc39.es/ecma262/#prod-annexB-Block">Block</a></emu-nt> with argument « » is <emu-val>true</emu-val>.
+      </li>
+      <li>
+        It is a Syntax Error if ContainsUndefinedContinueTarget of <emu-nt><a href="https://tc39.es/ecma262/#prod-annexB-Block">Block</a></emu-nt> with arguments « » and « » is <emu-val>true</emu-val>.
+      </li>
+    </ul>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-integration">
+  <h1><span class="secnum">2</span> Integration</h1>
+  <h2>Syntax</h2>
+  <emu-grammar><emu-production name="PrimaryExpression" params="Yield, Await" id="prod-PrimaryExpression">
+    <emu-nt params="Yield, Await"><a href="#prod-PrimaryExpression">PrimaryExpression</a><emu-mods><emu-params>[Yield, Await]</emu-params></emu-mods></emu-nt> <emu-geq>:</emu-geq> <ins><emu-rhs a="4df04a53"><emu-nt params="?Yield, ?Await" id="_ref_0"><a href="#prod-DoExpression">DoExpression</a><emu-mods><emu-params>[?Yield, ?Await]</emu-params></emu-mods></emu-nt></emu-rhs>
+    </ins>
+</emu-production>
+<emu-production name="ExpressionStatement" params="Yield, Await" id="prod-ExpressionStatement">
+    <emu-nt params="Yield, Await"><a href="#prod-ExpressionStatement">ExpressionStatement</a><emu-mods><emu-params>[Yield, Await]</emu-params></emu-mods></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="421c75a2">
+        <emu-gann>[lookahead ∉ { <emu-t>{</emu-t>, <emu-t>function</emu-t>, <emu-t>async</emu-t>
+        <emu-gann>[no <emu-nt><a href="https://tc39.es/ecma262/#prod-LineTerminator">LineTerminator</a></emu-nt> here]</emu-gann>
+        <emu-t>function</emu-t>, <emu-t>class</emu-t>, <emu-t>let</emu-t>
+        <emu-t>[</emu-t>, <ins><emu-t>do</emu-t></ins> }]</emu-gann>
+        <emu-nt params="+In, ?Yield, ?Await"><a href="https://tc39.es/ecma262/#prod-Expression">Expression</a><emu-mods><emu-params>[+In, ?Yield, ?Await]</emu-params></emu-mods></emu-nt>
+        <emu-t>;</emu-t>
+    </emu-rhs>
+</emu-production>
+</emu-grammar>
+  <emu-note><span class="note">Note</span><div class="note-contents"><p>Note the additional lookahead for <code>do</code> in ExpressionStatements. This prevents using <code>do</code> expressions in statement position, where they are ambiguous with <code>do</code> statements.</p></div></emu-note>
+  <h2>Semantics</h2>
+  <p>TODO: thread VarDeclaredNames through the entire expression grammar.</p>
+  <p>TODO: probably thread ContainsDuplicateLabels through the entire expression grammar.</p>
+</emu-clause><emu-annex id="sec-copyright-and-software-license">
+      <h1><span class="secnum">A</span> Copyright &amp; Software License</h1>
+      
+      <h2>Copyright Notice</h2>
+      <p>© 2020 Dave Herman, Chris Krychom, Kevin Gibbons</p>
+
+      <h2>Software License</h2>
+      <p>All Software contained in this document ("Software") is protected by copyright and is being made available under the "BSD License", included below. This Software may be subject to third party rights (rights from parties other than Ecma International), including patent rights, and no licenses under such third party rights are granted under this license even if the third party concerned is a member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT https://ecma-international.org/memento/codeofconduct.htm FOR INFORMATION REGARDING THE LICENSING OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ol>
+  <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+  <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+  <li>Neither the name of the authors nor Ecma International may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ol>
+
+<p>THIS SOFTWARE IS PROVIDED BY THE ECMA INTERNATIONAL "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ECMA INTERNATIONAL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+    </emu-annex></div></body>

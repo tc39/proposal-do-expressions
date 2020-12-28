@@ -1,13 +1,158 @@
 <!doctype html>
 <meta charset="utf8">
-<link rel="stylesheet" href="./spec.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
-<script src="./spec.js"></script>
 <pre class="metadata">
-title: do
+title: do expressions
 stage: 1
-contributors: Dave Herman, Chris Krycho
+contributors: Dave Herman, Chris Krychom, Kevin Gibbons
 </pre>
 
-<p>initial add</p>
+<emu-intro id="sec-intro">
+  <h1>Introduction</h1>
+  <p>`do` expressions are a syntactic construct which allows putting (some) statements in expression position without needing an immediately-invoked function expression.</p>
+</emu-intro>
 
+<emu-clause id="sec-do">
+  <h1>Do Expressions</h1>
+  <h2>Syntax</h2>
+  <emu-grammar type="definition">
+    DoExpression[Yield, Await] :
+      `do` Block[?Yield, ?Await, ~Return]
+  </emu-grammar>
+
+  <emu-clause id="sec-doexpression-runtime-semantics-evaluation">
+    <h1>Runtime Semantics: Evaluation</h1>
+    <emu-grammar>DoExpression: `do` Block</emu-grammar>
+    <emu-alg>
+      1. Return the result of evaluating |Block|.
+    </emu-alg>
+  </emu-clause>
+
+  <emu-clause id="sec-doexpression-static-semantics-early-errors">
+    <h1>Static Semantics: Early Errors</h1>
+    <emu-grammar>DoExpression: `do` Block</emu-grammar>
+    <ul>
+      <li>
+        It is a Syntax Error if ContainsUndefinedBreakTarget of |Block| with argument &laquo; &raquo; is *true*.
+      </li>
+      <li>
+        It is a Syntax Error if ContainsUndefinedContinueTarget of |Block| with arguments &laquo; &raquo; and &laquo; &raquo; is *true*.
+      </li>
+      <li>
+        It is a Syntax Error if EndsInIterationOrDeclaration of |Block| is *true*.
+      </li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-endsiniterationordeclaration">
+    <h1>Static Semantics: EndsInIterationOrDeclaration</h1>
+    <emu-grammar>StatementList : StatementList StatementListItem</emu-grammar>
+    <emu-alg>
+      1. If WillBreak of |StatementList| is *true*, return EndsInIterationOrDeclaration of |StatementList|.
+      1. If IsEmpty of |StatementListItem| is *true*, return EndsInIterationOrDeclaration of |StatementList|.
+      1. Return EndsInIterationOrDeclaration of |StatementListItem|.
+    </emu-alg>
+    <p>TODO: WillBreak, IsEmpty. WillBreak recurs into BlockStatement but not other nested things: it is only concerned with _unconditional_ `break`s. All the conditional constructrs wrap their result in UpdateEmpty.</p>
+    <emu-grammar>
+      StatementListItem : Declaration
+
+      Statement : VariableStatement
+
+      LabelledItem : FunctionDeclaration
+
+      BreakableStatement : IterationStatement
+    </emu-grammar>
+    <emu-alg>
+      1. Return *true*.
+    </emu-alg>
+    <emu-grammar>
+      Statement :
+        EmptyStatement
+        ExpressionStatement
+        ContinueStatement
+        BreakStatement
+        ReturnStatement
+        ThrowStatement
+        DebuggerStatement
+
+      Block : `{` `}`
+    </emu-grammar>
+    <emu-alg>
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>IfStatement : `if` `(` Expression `)` Statement `else` Statement</emu-grammar>
+    <emu-alg>
+      1. If EndsInIterationOrDeclaration of the first |Statement| is *true*, return *true*.
+      1. Return EndsInIterationOrDeclaration of the second |Statement|.
+    </emu-alg>
+    <emu-grammar>
+      IfStatement : `if` `(` Expression `)` Statement
+
+      WithStatement : `with` `(` Expression `)` Statement
+    </emu-grammar>
+    <emu-alg>
+      1. Return EndsInIterationOrDeclaration of |Statement|.
+    </emu-alg>
+    <emu-grammar>
+      LabelledStatement :
+        LabelIdentifier `:` LabelledItem
+    </emu-grammar>
+    <emu-alg>
+      1. Return EndsInIterationOrDeclaration of |LabelledItem|.
+    </emu-alg>
+    <emu-grammar>SwitchStatement : `switch` `(` Expression `)` CaseBlock</emu-grammar>
+    <emu-alg>
+      1. Return EndsInIterationOrDeclaration of |CaseBlock|.
+    </emu-alg>
+    <emu-grammar>CaseBlock : `{` CaseClauses? DefaultClause CaseClauses? `}`</emu-grammar>
+    <emu-alg>
+      1. TODO. This is going to be somewhat complicated.
+    </emu-alg>
+    <emu-grammar>CaseClauses : CaseClauses CaseClause</emu-grammar>
+    <emu-alg>
+      1. TODO. This is going to be somewhat complicated.
+    </emu-alg>
+    <emu-grammar>
+      CaseClause : `case` Expression `:` StatementList?
+
+      DefaultClause : `default` `:` StatementList?
+    </emu-grammar>
+    <emu-alg>
+      1. TODO. This is going to be somewhat complicated.
+    </emu-alg>
+    <emu-grammar>
+      TryStatement :
+        `try` Block Catch
+        `try` Block Catch Finally
+    </emu-grammar>
+    <emu-alg>
+      1. If EndsInIterationOrDeclaration of |Block| is *true*, return *true*.
+      1. Return EndsInIterationOrDeclaration of |Catch|.
+    </emu-alg>
+    <emu-grammar>
+      TryStatement : `try` Block Finally
+    </emu-grammar>
+    <emu-alg>
+      1. Return EndsInIterationOrDeclaration of |Block|.
+    </emu-alg>
+    <emu-grammar>Catch : `catch` `(` CatchParameter `)` Block</emu-grammar>
+    <emu-alg>
+      1. Return EndsInIterationOrDeclaration of |Block|.
+    </emu-alg>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-integration">
+  <h1>Integration</h1>
+  <h2>Syntax</h2>
+  <emu-grammar>
+    PrimaryExpression[Yield, Await] :
+      <ins>DoExpression[?Yield, ?Await]</ins>
+
+    ExpressionStatement[Yield, Await] :
+      [lookahead &lt;! {`{`, `function`, `async` [no |LineTerminator| here] `function`, `class`, `let` `[`, <ins>`do`</ins>}] Expression[+In, ?Yield, ?Await] `;`
+  </emu-grammar>
+  <emu-note><p>Note the additional lookahead for `do` in ExpressionStatements. This prevents using `do` expressions in statement position, where they are ambiguous with `do` statements.</p></emu-note>
+  <h2>Semantics</h2>
+  <p>TODO: thread VarDeclaredNames through the entire expression grammar.</p>
+  <p>TODO: probably thread ContainsDuplicateLabels through the entire expression grammar.</p>
+</emu-clause>
