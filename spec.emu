@@ -38,26 +38,25 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         It is a Syntax Error if ContainsUndefinedContinueTarget of |Block| with arguments &laquo; &raquo; and &laquo; &raquo; is *true*.
       </li>
       <li>
-        It is a Syntax Error if EndsInIterationOrDeclaration of |Block| is *true*.
+        It is a Syntax Error if EndsInIterationLabelOrDeclaration of |Block| is *true*.
       </li>
     </ul>
   </emu-clause>
 
-  <emu-clause id="sec-endsiniterationordeclaration">
-    <h1>Static Semantics: EndsInIterationOrDeclaration</h1>
+  <emu-clause id="sec-EndsInIterationLabelOrDeclaration">
+    <h1>Static Semantics: EndsInIterationLabelOrDeclaration</h1>
     <emu-grammar>StatementList : StatementList StatementListItem</emu-grammar>
     <emu-alg>
-      1. If WillBreak of |StatementList| is *true*, return EndsInIterationOrDeclaration of |StatementList|.
-      1. If IsEmpty of |StatementListItem| is *true*, return EndsInIterationOrDeclaration of |StatementList|.
-      1. Return EndsInIterationOrDeclaration of |StatementListItem|.
+      1. If IsEmpty of |StatementListItem| is *true*, return EndsInIterationLabelOrDeclaration of |StatementList|.
+      1. Return EndsInIterationLabelOrDeclaration of |StatementListItem|.
     </emu-alg>
-    <p>TODO: WillBreak, IsEmpty. WillBreak recurs into BlockStatement but not other nested things: it is only concerned with _unconditional_ `break`s. All the conditional constructrs wrap their result in UpdateEmpty.</p>
+    <p>TODO: IsEmpty.</p>
     <emu-grammar>
       StatementListItem : Declaration
 
-      Statement : VariableStatement
-
-      LabelledItem : FunctionDeclaration
+      Statement :
+        VariableStatement
+        LabelledStatement
 
       BreakableStatement : IterationStatement
     </emu-grammar>
@@ -81,8 +80,8 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     </emu-alg>
     <emu-grammar>IfStatement : `if` `(` Expression `)` Statement `else` Statement</emu-grammar>
     <emu-alg>
-      1. If EndsInIterationOrDeclaration of the first |Statement| is *true*, return *true*.
-      1. Return EndsInIterationOrDeclaration of the second |Statement|.
+      1. If EndsInIterationLabelOrDeclaration of the first |Statement| is *true*, return *true*.
+      1. Return EndsInIterationLabelOrDeclaration of the second |Statement|.
     </emu-alg>
     <emu-grammar>
       IfStatement : `if` `(` Expression `)` Statement
@@ -90,18 +89,18 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
       WithStatement : `with` `(` Expression `)` Statement
     </emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |Statement|.
+      1. Return EndsInIterationLabelOrDeclaration of |Statement|.
     </emu-alg>
     <emu-grammar>
       LabelledStatement :
         LabelIdentifier `:` LabelledItem
     </emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |LabelledItem|.
+      1. Return EndsInIterationLabelOrDeclaration of |LabelledItem|.
     </emu-alg>
     <emu-grammar>SwitchStatement : `switch` `(` Expression `)` CaseBlock</emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |CaseBlock|.
+      1. Return EndsInIterationLabelOrDeclaration of |CaseBlock|.
     </emu-alg>
     <emu-grammar>CaseBlock : `{` CaseClauses? DefaultClause CaseClauses? `}`</emu-grammar>
     <emu-alg>
@@ -125,18 +124,18 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         `try` Block Catch Finally
     </emu-grammar>
     <emu-alg>
-      1. If EndsInIterationOrDeclaration of |Block| is *true*, return *true*.
-      1. Return EndsInIterationOrDeclaration of |Catch|.
+      1. If EndsInIterationLabelOrDeclaration of |Block| is *true*, return *true*.
+      1. Return EndsInIterationLabelOrDeclaration of |Catch|.
     </emu-alg>
     <emu-grammar>
       TryStatement : `try` Block Finally
     </emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |Block|.
+      1. Return EndsInIterationLabelOrDeclaration of |Block|.
     </emu-alg>
     <emu-grammar>Catch : `catch` `(` CatchParameter `)` Block</emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |Block|.
+      1. Return EndsInIterationLabelOrDeclaration of |Block|.
     </emu-alg>
   </emu-clause>
 </emu-clause>
