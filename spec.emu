@@ -23,7 +23,8 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     <h1>Runtime Semantics: Evaluation</h1>
     <emu-grammar>DoExpression: `do` Block</emu-grammar>
     <emu-alg>
-      1. Return the result of evaluating |Block|.
+      1. Let _completion_ be the result of evaluating |Block|.
+      1. Return Completion(UpdateEmpty(_completion_, *undefined*)).
     </emu-alg>
   </emu-clause>
 

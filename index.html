@@ -1,6 +1,6 @@
 <!doctype html>
 <head><meta charset="utf-8">
-<title>do expressions</title><script type="application/json" id="menu-search-biblio">[{"type":"clause","id":"sec-intro","aoid":null,"title":"Introduction","titleHTML":"Introduction","number":"","namespace":"<no location>","location":"","referencingIds":[],"key":"Introduction"},{"type":"production","id":"prod-DoExpression","name":"DoExpression","referencingIds":["_ref_45"],"namespace":"<no location>","location":"","key":"DoExpression"},{"type":"clause","id":"sec-doexpression-runtime-semantics-evaluation","aoid":null,"title":"Runtime Semantics: Evaluation","titleHTML":"Runtime Semantics: Evaluation","number":"1.1","namespace":"<no location>","location":"","referencingIds":[],"key":"Runtime Semantics: Evaluation"},{"type":"clause","id":"sec-doexpression-static-semantics-early-errors","aoid":null,"title":"Static Semantics: Early Errors","titleHTML":"Static Semantics: Early Errors","number":"1.2","namespace":"<no location>","location":"","referencingIds":[],"key":"Static Semantics: Early Errors"},{"type":"production","id":"prod-StatementList","name":"StatementList","referencingIds":["_ref_7","_ref_10","_ref_12","_ref_13","_ref_33","_ref_34"],"namespace":"<no location>","location":"","key":"StatementList"},{"type":"production","id":"prod-StatementListItem","name":"StatementListItem","referencingIds":["_ref_8","_ref_9","_ref_11","_ref_14"],"namespace":"<no location>","location":"","key":"StatementListItem"},{"type":"production","id":"prod-Statement","name":"Statement","referencingIds":["_ref_16","_ref_17","_ref_18","_ref_19","_ref_20","_ref_21","_ref_22"],"namespace":"<no location>","location":"","key":"Statement"},{"type":"production","id":"prod-LabelledItem","name":"LabelledItem","referencingIds":["_ref_23","_ref_24","_ref_25"],"namespace":"<no location>","location":"","key":"LabelledItem"},{"type":"production","id":"prod-BreakableStatement","name":"BreakableStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"BreakableStatement"},{"type":"production","id":"prod-Block","name":"Block","referencingIds":["_ref_0","_ref_1","_ref_2","_ref_3","_ref_4","_ref_5","_ref_6","_ref_35","_ref_37","_ref_39","_ref_41","_ref_42","_ref_43","_ref_44"],"namespace":"<no location>","location":"","key":"Block"},{"type":"production","id":"prod-IfStatement","name":"IfStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"IfStatement"},{"type":"production","id":"prod-WithStatement","name":"WithStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"WithStatement"},{"type":"production","id":"prod-LabelledStatement","name":"LabelledStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"LabelledStatement"},{"type":"production","id":"prod-SwitchStatement","name":"SwitchStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"SwitchStatement"},{"type":"production","id":"prod-CaseBlock","name":"CaseBlock","referencingIds":["_ref_26","_ref_27"],"namespace":"<no location>","location":"","key":"CaseBlock"},{"type":"production","id":"prod-CaseClauses","name":"CaseClauses","referencingIds":["_ref_28","_ref_30","_ref_31"],"namespace":"<no location>","location":"","key":"CaseClauses"},{"type":"production","id":"prod-CaseClause","name":"CaseClause","referencingIds":["_ref_32"],"namespace":"<no location>","location":"","key":"CaseClause"},{"type":"production","id":"prod-DefaultClause","name":"DefaultClause","referencingIds":["_ref_29"],"namespace":"<no location>","location":"","key":"DefaultClause"},{"type":"production","id":"prod-TryStatement","name":"TryStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"TryStatement"},{"type":"production","id":"prod-Catch","name":"Catch","referencingIds":["_ref_36","_ref_38","_ref_40"],"namespace":"<no location>","location":"","key":"Catch"},{"type":"clause","id":"sec-endsiniterationordeclaration","aoid":null,"title":"Static Semantics: EndsInIterationOrDeclaration","titleHTML":"Static Semantics: EndsInIterationOrDeclaration","number":"1.3","namespace":"<no location>","location":"","referencingIds":[],"key":"Static Semantics: EndsInIterationOrDeclaration"},{"type":"clause","id":"sec-do","aoid":null,"title":"Do Expressions","titleHTML":"Do Expressions","number":"1","namespace":"<no location>","location":"","referencingIds":[],"key":"Do Expressions"},{"type":"production","id":"prod-PrimaryExpression","name":"PrimaryExpression","referencingIds":[],"namespace":"<no location>","location":"","key":"PrimaryExpression"},{"type":"production","id":"prod-ExpressionStatement","name":"ExpressionStatement","referencingIds":["_ref_15"],"namespace":"<no location>","location":"","key":"ExpressionStatement"},{"type":"clause","id":"sec-integration","aoid":null,"title":"Integration","titleHTML":"Integration","number":"2","namespace":"<no location>","location":"","referencingIds":[],"key":"Integration"},{"type":"clause","id":"sec-copyright-and-software-license","aoid":null,"title":"Copyright & Software License","titleHTML":"Copyright &amp; Software License","number":"A","namespace":"<no location>","location":"","referencingIds":[],"key":"Copyright & Software License"}]</script><script>"use strict";
+<title>do expressions</title><script type="application/json" id="menu-search-biblio">[{"type":"clause","id":"sec-intro","aoid":null,"title":"Introduction","titleHTML":"Introduction","number":"","namespace":"<no location>","location":"","referencingIds":[],"key":"Introduction"},{"type":"production","id":"prod-DoExpression","name":"DoExpression","referencingIds":["_ref_47"],"namespace":"<no location>","location":"","key":"DoExpression"},{"type":"clause","id":"sec-doexpression-runtime-semantics-evaluation","aoid":null,"title":"Runtime Semantics: Evaluation","titleHTML":"Runtime Semantics: Evaluation","number":"1.1","namespace":"<no location>","location":"","referencingIds":[],"key":"Runtime Semantics: Evaluation"},{"type":"clause","id":"sec-doexpression-static-semantics-early-errors","aoid":null,"title":"Static Semantics: Early Errors","titleHTML":"Static Semantics: Early Errors","number":"1.2","namespace":"<no location>","location":"","referencingIds":[],"key":"Static Semantics: Early Errors"},{"type":"production","id":"prod-StatementList","name":"StatementList","referencingIds":["_ref_9","_ref_12","_ref_14","_ref_15","_ref_35","_ref_36"],"namespace":"<no location>","location":"","key":"StatementList"},{"type":"production","id":"prod-StatementListItem","name":"StatementListItem","referencingIds":["_ref_10","_ref_11","_ref_13","_ref_16"],"namespace":"<no location>","location":"","key":"StatementListItem"},{"type":"production","id":"prod-Statement","name":"Statement","referencingIds":["_ref_18","_ref_19","_ref_20","_ref_21","_ref_22","_ref_23","_ref_24"],"namespace":"<no location>","location":"","key":"Statement"},{"type":"production","id":"prod-LabelledItem","name":"LabelledItem","referencingIds":["_ref_25","_ref_26","_ref_27"],"namespace":"<no location>","location":"","key":"LabelledItem"},{"type":"production","id":"prod-BreakableStatement","name":"BreakableStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"BreakableStatement"},{"type":"production","id":"prod-Block","name":"Block","referencingIds":["_ref_2","_ref_3","_ref_4","_ref_5","_ref_6","_ref_7","_ref_8","_ref_37","_ref_39","_ref_41","_ref_43","_ref_44","_ref_45","_ref_46"],"namespace":"<no location>","location":"","key":"Block"},{"type":"production","id":"prod-IfStatement","name":"IfStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"IfStatement"},{"type":"production","id":"prod-WithStatement","name":"WithStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"WithStatement"},{"type":"production","id":"prod-LabelledStatement","name":"LabelledStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"LabelledStatement"},{"type":"production","id":"prod-SwitchStatement","name":"SwitchStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"SwitchStatement"},{"type":"production","id":"prod-CaseBlock","name":"CaseBlock","referencingIds":["_ref_28","_ref_29"],"namespace":"<no location>","location":"","key":"CaseBlock"},{"type":"production","id":"prod-CaseClauses","name":"CaseClauses","referencingIds":["_ref_30","_ref_32","_ref_33"],"namespace":"<no location>","location":"","key":"CaseClauses"},{"type":"production","id":"prod-CaseClause","name":"CaseClause","referencingIds":["_ref_34"],"namespace":"<no location>","location":"","key":"CaseClause"},{"type":"production","id":"prod-DefaultClause","name":"DefaultClause","referencingIds":["_ref_31"],"namespace":"<no location>","location":"","key":"DefaultClause"},{"type":"production","id":"prod-TryStatement","name":"TryStatement","referencingIds":[],"namespace":"<no location>","location":"","key":"TryStatement"},{"type":"production","id":"prod-Catch","name":"Catch","referencingIds":["_ref_38","_ref_40","_ref_42"],"namespace":"<no location>","location":"","key":"Catch"},{"type":"clause","id":"sec-endsiniterationordeclaration","aoid":null,"title":"Static Semantics: EndsInIterationOrDeclaration","titleHTML":"Static Semantics: EndsInIterationOrDeclaration","number":"1.3","namespace":"<no location>","location":"","referencingIds":[],"key":"Static Semantics: EndsInIterationOrDeclaration"},{"type":"clause","id":"sec-do","aoid":null,"title":"Do Expressions","titleHTML":"Do Expressions","number":"1","namespace":"<no location>","location":"","referencingIds":[],"key":"Do Expressions"},{"type":"production","id":"prod-PrimaryExpression","name":"PrimaryExpression","referencingIds":[],"namespace":"<no location>","location":"","key":"PrimaryExpression"},{"type":"production","id":"prod-ExpressionStatement","name":"ExpressionStatement","referencingIds":["_ref_17"],"namespace":"<no location>","location":"","key":"ExpressionStatement"},{"type":"clause","id":"sec-integration","aoid":null,"title":"Integration","titleHTML":"Integration","number":"2","namespace":"<no location>","location":"","referencingIds":[],"key":"Integration"},{"type":"clause","id":"sec-copyright-and-software-license","aoid":null,"title":"Copyright & Software License","titleHTML":"Copyright &amp; Software License","number":"A","namespace":"<no location>","location":"","referencingIds":[],"key":"Copyright & Software License"}]</script><script>"use strict";
 
 function Search(menu) {
   this.menu = menu;
@@ -1861,7 +1861,7 @@ li.menu-search-result-term:before {
   <emu-grammar type="definition"><emu-production name="DoExpression" params="Yield, Await" id="prod-DoExpression">
     <emu-nt params="Yield, Await"><a href="#prod-DoExpression">DoExpression</a><emu-mods><emu-params>[Yield, Await]</emu-params></emu-mods></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="2367ffe6">
         <emu-t>do</emu-t>
-        <emu-nt params="?Yield, ?Await, ~Return" id="_ref_0"><a href="#prod-Block">Block</a><emu-mods><emu-params>[?Yield, ?Await, ~Return]</emu-params></emu-mods></emu-nt>
+        <emu-nt params="?Yield, ?Await, ~Return" id="_ref_2"><a href="#prod-Block">Block</a><emu-mods><emu-params>[?Yield, ?Await, ~Return]</emu-params></emu-mods></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
@@ -1871,11 +1871,11 @@ li.menu-search-result-term:before {
     <emu-grammar><emu-production name="DoExpression" collapsed="">
     <emu-nt><a href="#prod-DoExpression">DoExpression</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="288d8cb1">
         <emu-t>do</emu-t>
-        <emu-nt id="_ref_1"><a href="#prod-Block">Block</a></emu-nt>
+        <emu-nt id="_ref_3"><a href="#prod-Block">Block</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Return the result of evaluating <emu-nt id="_ref_2"><a href="#prod-Block">Block</a></emu-nt>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Let <var>completion</var> be the result of evaluating <emu-nt id="_ref_4"><a href="#prod-Block">Block</a></emu-nt>.</li><li>Return <emu-xref aoid="Completion" id="_ref_0"><a href="https://tc39.es/ecma262/#sec-completion-record-specification-type">Completion</a></emu-xref>(<emu-xref aoid="UpdateEmpty" id="_ref_1"><a href="https://tc39.es/ecma262/#sec-updateempty">UpdateEmpty</a></emu-xref>(<var>completion</var>, <emu-val>undefined</emu-val>)).</li></ol></emu-alg>
   </emu-clause>
 
   <emu-clause id="sec-doexpression-static-semantics-early-errors">
@@ -1883,19 +1883,19 @@ li.menu-search-result-term:before {
     <emu-grammar><emu-production name="DoExpression" collapsed="">
     <emu-nt><a href="#prod-DoExpression">DoExpression</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="288d8cb1">
         <emu-t>do</emu-t>
-        <emu-nt id="_ref_3"><a href="#prod-Block">Block</a></emu-nt>
+        <emu-nt id="_ref_5"><a href="#prod-Block">Block</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
     <ul>
       <li>
-        It is a Syntax Error if ContainsUndefinedBreakTarget of <emu-nt id="_ref_4"><a href="#prod-Block">Block</a></emu-nt> with argument « » is <emu-val>true</emu-val>.
+        It is a Syntax Error if ContainsUndefinedBreakTarget of <emu-nt id="_ref_6"><a href="#prod-Block">Block</a></emu-nt> with argument « » is <emu-val>true</emu-val>.
       </li>
       <li>
-        It is a Syntax Error if ContainsUndefinedContinueTarget of <emu-nt id="_ref_5"><a href="#prod-Block">Block</a></emu-nt> with arguments « » and « » is <emu-val>true</emu-val>.
+        It is a Syntax Error if ContainsUndefinedContinueTarget of <emu-nt id="_ref_7"><a href="#prod-Block">Block</a></emu-nt> with arguments « » and « » is <emu-val>true</emu-val>.
       </li>
       <li>
-        It is a Syntax Error if EndsInIterationOrDeclaration of <emu-nt id="_ref_6"><a href="#prod-Block">Block</a></emu-nt> with arguments « » and <emu-val>true</emu-val> is <emu-val>true</emu-val>.
+        It is a Syntax Error if EndsInIterationOrDeclaration of <emu-nt id="_ref_8"><a href="#prod-Block">Block</a></emu-nt> with arguments « » and <emu-val>true</emu-val> is <emu-val>true</emu-val>.
       </li>
     </ul>
   </emu-clause>
@@ -1905,12 +1905,12 @@ li.menu-search-result-term:before {
     <p>With parameters <var>labelSet</var> and <var>isLast</var>.</p>
     <emu-grammar><emu-production name="StatementList" collapsed="" id="prod-StatementList">
     <emu-nt><a href="#prod-StatementList">StatementList</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="0db4597a">
-        <emu-nt id="_ref_7"><a href="#prod-StatementList">StatementList</a></emu-nt>
-        <emu-nt id="_ref_8"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt>
+        <emu-nt id="_ref_9"><a href="#prod-StatementList">StatementList</a></emu-nt>
+        <emu-nt id="_ref_10"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>If IsEmpty of <emu-nt id="_ref_9"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> is <emu-val>true</emu-val>, return EndsInIterationOrDeclaration of <emu-nt id="_ref_10"><a href="#prod-StatementList">StatementList</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li><li>If IsBreak of <emu-nt id="_ref_11"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> with argument <var>labelSet</var> is <emu-val>true</emu-val>, return EndsInIterationOrDeclaration of <emu-nt id="_ref_12"><a href="#prod-StatementList">StatementList</a></emu-nt> with arguments <var>labelSet</var> and <emu-val>true</emu-val>.</li><li>If EndsInIterationOrDeclaration of <emu-nt id="_ref_13"><a href="#prod-StatementList">StatementList</a></emu-nt> with arguments <var>labelSet</var> and <emu-val>false</emu-val> is <emu-val>true</emu-val>, return <emu-val>true</emu-val>.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_14"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>If IsEmpty of <emu-nt id="_ref_11"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> is <emu-val>true</emu-val>, return EndsInIterationOrDeclaration of <emu-nt id="_ref_12"><a href="#prod-StatementList">StatementList</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li><li>If IsBreak of <emu-nt id="_ref_13"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> with argument <var>labelSet</var> is <emu-val>true</emu-val>, return EndsInIterationOrDeclaration of <emu-nt id="_ref_14"><a href="#prod-StatementList">StatementList</a></emu-nt> with arguments <var>labelSet</var> and <emu-val>true</emu-val>.</li><li>If EndsInIterationOrDeclaration of <emu-nt id="_ref_15"><a href="#prod-StatementList">StatementList</a></emu-nt> with arguments <var>labelSet</var> and <emu-val>false</emu-val> is <emu-val>true</emu-val>, return <emu-val>true</emu-val>.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_16"><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <p>TODO: IsEmpty, IsBreak. IsBreak recurs into the first non-empty element of StatementLists but nothing else, and requires matching something in the <var>labelSet</var>.</p>
     <emu-grammar><emu-production name="StatementListItem" collapsed="" id="prod-StatementListItem">
     <emu-nt><a href="#prod-StatementListItem">StatementListItem</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="d6f37721"><emu-nt><a href="https://tc39.es/ecma262/#prod-Declaration">Declaration</a></emu-nt></emu-rhs>
@@ -1928,7 +1928,7 @@ li.menu-search-result-term:before {
     <emu-alg><ol><li>Return <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="Statement">
     <emu-nt><a href="#prod-Statement">Statement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="7338aabb"><emu-nt><a href="https://tc39.es/ecma262/#prod-EmptyStatement">EmptyStatement</a></emu-nt></emu-rhs>
-    <emu-rhs a="82c424b7"><emu-nt id="_ref_15"><a href="#prod-ExpressionStatement">ExpressionStatement</a></emu-nt></emu-rhs>
+    <emu-rhs a="82c424b7"><emu-nt id="_ref_17"><a href="#prod-ExpressionStatement">ExpressionStatement</a></emu-nt></emu-rhs>
     <emu-rhs a="1d7d329e"><emu-nt><a href="https://tc39.es/ecma262/#prod-asi-rules-ContinueStatement">ContinueStatement</a></emu-nt></emu-rhs>
     <emu-rhs a="ab8baff9"><emu-nt><a href="https://tc39.es/ecma262/#prod-asi-rules-BreakStatement">BreakStatement</a></emu-nt></emu-rhs>
     <emu-rhs a="aa6f7913"><emu-nt><a href="https://tc39.es/ecma262/#prod-asi-rules-ReturnStatement">ReturnStatement</a></emu-nt></emu-rhs>
@@ -1949,20 +1949,20 @@ li.menu-search-result-term:before {
         <emu-t>(</emu-t>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Expression">Expression</a></emu-nt>
         <emu-t>)</emu-t>
-        <emu-nt id="_ref_16"><a href="#prod-Statement">Statement</a></emu-nt>
+        <emu-nt id="_ref_18"><a href="#prod-Statement">Statement</a></emu-nt>
         <emu-t>else</emu-t>
-        <emu-nt id="_ref_17"><a href="#prod-Statement">Statement</a></emu-nt>
+        <emu-nt id="_ref_19"><a href="#prod-Statement">Statement</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Let <var>first</var> be EndsInIterationOrDeclaration of the first <emu-nt id="_ref_18"><a href="#prod-Statement">Statement</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li><li>If <var>first</var> is <emu-val>true</emu-val>, return <emu-val>true</emu-val>.</li><li>Return EndsInIterationOrDeclaration of the second <emu-nt id="_ref_19"><a href="#prod-Statement">Statement</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Let <var>first</var> be EndsInIterationOrDeclaration of the first <emu-nt id="_ref_20"><a href="#prod-Statement">Statement</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li><li>If <var>first</var> is <emu-val>true</emu-val>, return <emu-val>true</emu-val>.</li><li>Return EndsInIterationOrDeclaration of the second <emu-nt id="_ref_21"><a href="#prod-Statement">Statement</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="IfStatement" collapsed="">
     <emu-nt><a href="#prod-IfStatement">IfStatement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="f6819570">
         <emu-t>if</emu-t>
         <emu-t>(</emu-t>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Expression">Expression</a></emu-nt>
         <emu-t>)</emu-t>
-        <emu-nt id="_ref_20"><a href="#prod-Statement">Statement</a></emu-nt>
+        <emu-nt id="_ref_22"><a href="#prod-Statement">Statement</a></emu-nt>
     </emu-rhs>
 </emu-production>
 <emu-production name="WithStatement" collapsed="" id="prod-WithStatement">
@@ -1971,37 +1971,37 @@ li.menu-search-result-term:before {
         <emu-t>(</emu-t>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Expression">Expression</a></emu-nt>
         <emu-t>)</emu-t>
-        <emu-nt id="_ref_21"><a href="#prod-Statement">Statement</a></emu-nt>
+        <emu-nt id="_ref_23"><a href="#prod-Statement">Statement</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_22"><a href="#prod-Statement">Statement</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_24"><a href="#prod-Statement">Statement</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="LabelledStatement" id="prod-LabelledStatement">
     <emu-nt><a href="#prod-LabelledStatement">LabelledStatement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="51b6efb5">
         <emu-nt><a href="https://tc39.es/ecma262/#prod-LabelIdentifier">LabelIdentifier</a></emu-nt>
         <emu-t>:</emu-t>
-        <emu-nt id="_ref_23"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt>
+        <emu-nt id="_ref_25"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>If <var>isLast</var> is <emu-val>true</emu-val>, then<ol><li>Let <var>label</var> be the StringValue of <emu-nt><a href="https://tc39.es/ecma262/#prod-LabelIdentifier">LabelIdentifier</a></emu-nt>.</li><li>Let <var>newLabelSet</var> be a copy of <var>labelSet</var> with <var>label</var> appended.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_24"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>newLabelSet</var> and <emu-val>true</emu-val>.</li></ol></li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_25"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>LabelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>If <var>isLast</var> is <emu-val>true</emu-val>, then<ol><li>Let <var>label</var> be the StringValue of <emu-nt><a href="https://tc39.es/ecma262/#prod-LabelIdentifier">LabelIdentifier</a></emu-nt>.</li><li>Let <var>newLabelSet</var> be a copy of <var>labelSet</var> with <var>label</var> appended.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_26"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>newLabelSet</var> and <emu-val>true</emu-val>.</li></ol></li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_27"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>LabelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="SwitchStatement" collapsed="" id="prod-SwitchStatement">
     <emu-nt><a href="#prod-SwitchStatement">SwitchStatement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="515acffe">
         <emu-t>switch</emu-t>
         <emu-t>(</emu-t>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Expression">Expression</a></emu-nt>
         <emu-t>)</emu-t>
-        <emu-nt id="_ref_26"><a href="#prod-CaseBlock">CaseBlock</a></emu-nt>
+        <emu-nt id="_ref_28"><a href="#prod-CaseBlock">CaseBlock</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_27"><a href="#prod-CaseBlock">CaseBlock</a></emu-nt>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_29"><a href="#prod-CaseBlock">CaseBlock</a></emu-nt>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="CaseBlock" collapsed="" id="prod-CaseBlock">
     <emu-nt><a href="#prod-CaseBlock">CaseBlock</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="503b8396">
         <emu-t>{</emu-t>
-        <emu-nt optional="" id="_ref_28"><a href="#prod-CaseClauses">CaseClauses</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
-        <emu-nt id="_ref_29"><a href="#prod-DefaultClause">DefaultClause</a></emu-nt>
         <emu-nt optional="" id="_ref_30"><a href="#prod-CaseClauses">CaseClauses</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
+        <emu-nt id="_ref_31"><a href="#prod-DefaultClause">DefaultClause</a></emu-nt>
+        <emu-nt optional="" id="_ref_32"><a href="#prod-CaseClauses">CaseClauses</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
         <emu-t>}</emu-t>
     </emu-rhs>
 </emu-production>
@@ -2009,8 +2009,8 @@ li.menu-search-result-term:before {
     <emu-alg><ol><li>TODO. This is going to be somewhat complicated.</li></ol></emu-alg>
     <emu-grammar><emu-production name="CaseClauses" collapsed="" id="prod-CaseClauses">
     <emu-nt><a href="#prod-CaseClauses">CaseClauses</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="68374923">
-        <emu-nt id="_ref_31"><a href="#prod-CaseClauses">CaseClauses</a></emu-nt>
-        <emu-nt id="_ref_32"><a href="#prod-CaseClause">CaseClause</a></emu-nt>
+        <emu-nt id="_ref_33"><a href="#prod-CaseClauses">CaseClauses</a></emu-nt>
+        <emu-nt id="_ref_34"><a href="#prod-CaseClause">CaseClause</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
@@ -2020,14 +2020,14 @@ li.menu-search-result-term:before {
         <emu-t>case</emu-t>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Expression">Expression</a></emu-nt>
         <emu-t>:</emu-t>
-        <emu-nt optional="" id="_ref_33"><a href="#prod-StatementList">StatementList</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
+        <emu-nt optional="" id="_ref_35"><a href="#prod-StatementList">StatementList</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
     </emu-rhs>
 </emu-production>
 <emu-production name="DefaultClause" collapsed="" id="prod-DefaultClause">
     <emu-nt><a href="#prod-DefaultClause">DefaultClause</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="6782073e">
         <emu-t>default</emu-t>
         <emu-t>:</emu-t>
-        <emu-nt optional="" id="_ref_34"><a href="#prod-StatementList">StatementList</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
+        <emu-nt optional="" id="_ref_36"><a href="#prod-StatementList">StatementList</a><emu-mods><emu-opt>opt</emu-opt></emu-mods></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
@@ -2035,38 +2035,38 @@ li.menu-search-result-term:before {
     <emu-grammar><emu-production name="TryStatement" id="prod-TryStatement">
     <emu-nt><a href="#prod-TryStatement">TryStatement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="a8714e57">
         <emu-t>try</emu-t>
-        <emu-nt id="_ref_35"><a href="#prod-Block">Block</a></emu-nt>
-        <emu-nt id="_ref_36"><a href="#prod-Catch">Catch</a></emu-nt>
+        <emu-nt id="_ref_37"><a href="#prod-Block">Block</a></emu-nt>
+        <emu-nt id="_ref_38"><a href="#prod-Catch">Catch</a></emu-nt>
     </emu-rhs>
     <emu-rhs a="1b19737c">
         <emu-t>try</emu-t>
-        <emu-nt id="_ref_37"><a href="#prod-Block">Block</a></emu-nt>
-        <emu-nt id="_ref_38"><a href="#prod-Catch">Catch</a></emu-nt>
+        <emu-nt id="_ref_39"><a href="#prod-Block">Block</a></emu-nt>
+        <emu-nt id="_ref_40"><a href="#prod-Catch">Catch</a></emu-nt>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Finally">Finally</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>If EndsInIterationOrDeclaration of <emu-nt id="_ref_39"><a href="#prod-Block">Block</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var> is <emu-val>true</emu-val>, return <emu-val>true</emu-val>.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_40"><a href="#prod-Catch">Catch</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>If EndsInIterationOrDeclaration of <emu-nt id="_ref_41"><a href="#prod-Block">Block</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var> is <emu-val>true</emu-val>, return <emu-val>true</emu-val>.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_42"><a href="#prod-Catch">Catch</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="TryStatement" collapsed="">
     <emu-nt><a href="#prod-TryStatement">TryStatement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="5ec68ab9">
         <emu-t>try</emu-t>
-        <emu-nt id="_ref_41"><a href="#prod-Block">Block</a></emu-nt>
+        <emu-nt id="_ref_43"><a href="#prod-Block">Block</a></emu-nt>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-Finally">Finally</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_42"><a href="#prod-Block">Block</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_44"><a href="#prod-Block">Block</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="Catch" collapsed="" id="prod-Catch">
     <emu-nt><a href="#prod-Catch">Catch</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="ddc13c36">
         <emu-t>catch</emu-t>
         <emu-t>(</emu-t>
         <emu-nt><a href="https://tc39.es/ecma262/#prod-annexB-CatchParameter">CatchParameter</a></emu-nt>
         <emu-t>)</emu-t>
-        <emu-nt id="_ref_43"><a href="#prod-Block">Block</a></emu-nt>
+        <emu-nt id="_ref_45"><a href="#prod-Block">Block</a></emu-nt>
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_44"><a href="#prod-Block">Block</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_46"><a href="#prod-Block">Block</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
   </emu-clause>
 </emu-clause>
 
@@ -2074,7 +2074,7 @@ li.menu-search-result-term:before {
   <h1><span class="secnum">2</span> Integration</h1>
   <h2>Syntax</h2>
   <emu-grammar><emu-production name="PrimaryExpression" params="Yield, Await" id="prod-PrimaryExpression">
-    <emu-nt params="Yield, Await"><a href="#prod-PrimaryExpression">PrimaryExpression</a><emu-mods><emu-params>[Yield, Await]</emu-params></emu-mods></emu-nt> <emu-geq>:</emu-geq> <ins><emu-rhs a="4df04a53"><emu-nt params="?Yield, ?Await" id="_ref_45"><a href="#prod-DoExpression">DoExpression</a><emu-mods><emu-params>[?Yield, ?Await]</emu-params></emu-mods></emu-nt></emu-rhs>
+    <emu-nt params="Yield, Await"><a href="#prod-PrimaryExpression">PrimaryExpression</a><emu-mods><emu-params>[Yield, Await]</emu-params></emu-mods></emu-nt> <emu-geq>:</emu-geq> <ins><emu-rhs a="4df04a53"><emu-nt params="?Yield, ?Await" id="_ref_47"><a href="#prod-DoExpression">DoExpression</a><emu-mods><emu-params>[?Yield, ?Await]</emu-params></emu-mods></emu-nt></emu-rhs>
     </ins>
 </emu-production>
 <emu-production name="ExpressionStatement" params="Yield, Await" id="prod-ExpressionStatement">
