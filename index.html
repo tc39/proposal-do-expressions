@@ -2072,7 +2072,7 @@ li.menu-search-result-term:before {
     <h1><span class="secnum">1.4</span> Static Semantics: IsEmpty</h1>
     <p>With parameter <var>labelSet</var>.</p>
     <emu-note><span class="note">Note</span><div class="note-contents">
-      <p>Here "empty" means "consisting solely of <emu-nt><a href="https://tc39.es/ecma262/#prod-EmptyStatement">EmptyStatement</a></emu-nt>s, <emu-nt><a href="https://tc39.es/ecma262/#prod-DebuggerStatement">DebuggerStatement</a></emu-nt>s, <emu-nt id="_ref_48"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt>s which immediately break themselves, or <emu-nt><a href="https://tc39.es/ecma262/#prod-BlockStatement">BlockStatement</a></emu-nt>s which are themselves empty".</p>
+      <p>Here "empty" means "consisting solely of <emu-nt><a href="https://tc39.es/ecma262/#prod-EmptyStatement">EmptyStatement</a></emu-nt>s, <emu-nt><a href="https://tc39.es/ecma262/#prod-DebuggerStatement">DebuggerStatement</a></emu-nt>s, <emu-nt id="_ref_48"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt>s which immediately unconditionally break themselves, or <emu-nt><a href="https://tc39.es/ecma262/#prod-BlockStatement">BlockStatement</a></emu-nt>s which are themselves empty".</p>
       <p><var>labelSet</var> is always empty when this SDO is invoked by other operations. It is used to track internally the labels which, if broken, would cause the statements being examined to be empty, as in <code>label: { break label; }</code>.</p>
     </div></emu-note>
     <emu-grammar><emu-production name="StatementList">
@@ -2144,7 +2144,7 @@ li.menu-search-result-term:before {
     <h1><span class="secnum">1.5</span> Static Semantics: IsBreak</h1>
     <p>With parameter <var>labelSet</var>.</p>
     <emu-note><span class="note">Note</span><div class="note-contents">
-      <p>This SDO answers the question "is the first non-empty statement in this <emu-xref href="#sec-syntactic-grammar"><a href="https://tc39.es/ecma262/#sec-syntactic-grammar">Parse Node</a></emu-xref> a <emu-nt id="_ref_61"><a href="#prod-BreakStatement">BreakStatement</a></emu-nt> for one of the labels in <var>labelSet</var>?".</p>
+      <p>This SDO answers the question "is the first non-empty statement in this <emu-xref href="#sec-syntactic-grammar"><a href="https://tc39.es/ecma262/#sec-syntactic-grammar">Parse Node</a></emu-xref> a <emu-nt id="_ref_61"><a href="#prod-BreakStatement">BreakStatement</a></emu-nt> for one of the labels in <var>labelSet</var>?". It will recurse into <emu-nt><a href="https://tc39.es/ecma262/#prod-BlockStatement">BlockStatement</a></emu-nt>s but not other kinds of statement-containing statements.</p>
     </div></emu-note>
     <emu-grammar><emu-production name="StatementList">
     <emu-nt><a href="#prod-StatementList">StatementList</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="0db4597a">

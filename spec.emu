@@ -179,7 +179,7 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     <h1>Static Semantics: IsEmpty</h1>
     <p>With parameter _labelSet_.</p>
     <emu-note>
-      <p>Here "empty" means "consisting solely of |EmptyStatement|s, |DebuggerStatement|s, |LabelledItem|s which immediately break themselves, or |BlockStatement|s which are themselves empty".</p>
+      <p>Here "empty" means "consisting solely of |EmptyStatement|s, |DebuggerStatement|s, |LabelledItem|s which immediately unconditionally break themselves, or |BlockStatement|s which are themselves empty".</p>
       <p>_labelSet_ is always empty when this SDO is invoked by other operations. It is used to track internally the labels which, if broken, would cause the statements being examined to be empty, as in `label: { break label; }`.</p>
     </emu-note>
     <emu-grammar>
@@ -250,7 +250,7 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     <h1>Static Semantics: IsBreak</h1>
     <p>With parameter _labelSet_.</p>
     <emu-note>
-      <p>This SDO answers the question "is the first non-empty statement in this Parse Node a |BreakStatement| for one of the labels in _labelSet_?".</p>
+      <p>This SDO answers the question "is the first non-empty statement in this Parse Node a |BreakStatement| for one of the labels in _labelSet_?". It will recurse into |BlockStatement|s but not other kinds of statement-containing statements.</p>
     </emu-note>
     <emu-grammar>
       StatementList :
