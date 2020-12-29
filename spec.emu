@@ -47,22 +47,28 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
   <emu-clause id="sec-endsiniterationordeclaration">
     <h1>Static Semantics: EndsInIterationOrDeclaration</h1>
     <p>With parameters _labelSet_ and _isLast_.</p>
-    <emu-grammar>StatementList : StatementList StatementListItem</emu-grammar>
+    <emu-grammar>
+      StatementList :
+        StatementList StatementListItem
+    </emu-grammar>
     <emu-alg>
-      1. If IsEmpty of |StatementListItem| is *true*, return EndsInIterationOrDeclaration of |StatementList| with arguments _labelSet_ and _isLast_.
+      1. If IsEmpty of |StatementListItem| with argument &laquo; &raquo; is *true*, return EndsInIterationOrDeclaration of |StatementList| with arguments _labelSet_ and _isLast_.
       1. If IsBreak of |StatementListItem| with argument _labelSet_ is *true*, return EndsInIterationOrDeclaration of |StatementList| with arguments _labelSet_ and *true*.
       1. If EndsInIterationOrDeclaration of |StatementList| with arguments _labelSet_ and *false* is *true*, return *true*.
       1. Return EndsInIterationOrDeclaration of |StatementListItem| with arguments _labelSet_ and _isLast_.
     </emu-alg>
-    <p>TODO: IsEmpty, IsBreak. IsBreak recurs into the first non-empty element of StatementLists but nothing else, and requires matching something in the _labelSet_.</p>
     <emu-grammar>
-      StatementListItem : Declaration
+      StatementListItem :
+        Declaration
 
-      Statement : VariableStatement
+      Statement :
+        VariableStatement
 
-      LabelledItem : FunctionDeclaration
+      LabelledItem :
+        FunctionDeclaration
 
-      BreakableStatement : IterationStatement
+      BreakableStatement :
+        IterationStatement
     </emu-grammar>
     <emu-alg>
       1. Return _isLast_.
@@ -77,21 +83,27 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         ThrowStatement
         DebuggerStatement
 
-      Block : `{` `}`
+      Block :
+        `{` `}`
     </emu-grammar>
     <emu-alg>
       1. Return *false*.
     </emu-alg>
-    <emu-grammar>IfStatement : `if` `(` Expression `)` Statement `else` Statement</emu-grammar>
+    <emu-grammar>
+      IfStatement :
+        `if` `(` Expression `)` Statement `else` Statement
+    </emu-grammar>
     <emu-alg>
       1. Let _first_ be EndsInIterationOrDeclaration of the first |Statement| with arguments _labelSet_ and _isLast_.
       1. If _first_ is *true*, return *true*.
       1. Return EndsInIterationOrDeclaration of the second |Statement| with arguments _labelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
-      IfStatement : `if` `(` Expression `)` Statement
+      IfStatement :
+        `if` `(` Expression `)` Statement
 
-      WithStatement : `with` `(` Expression `)` Statement
+      WithStatement :
+        `with` `(` Expression `)` Statement
     </emu-grammar>
     <emu-alg>
       1. Return EndsInIterationOrDeclaration of |Statement| with arguments _labelSet_ and _isLast_.
@@ -107,22 +119,33 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         1. Return EndsInIterationOrDeclaration of |LabelledItem| with arguments _newLabelSet_ and *true*.
       1. Return EndsInIterationOrDeclaration of |LabelledItem| with arguments _LabelSet_ and _isLast_.
     </emu-alg>
-    <emu-grammar>SwitchStatement : `switch` `(` Expression `)` CaseBlock</emu-grammar>
+    <emu-grammar>
+      SwitchStatement :
+        `switch` `(` Expression `)` CaseBlock
+    </emu-grammar>
     <emu-alg>
       1. Return EndsInIterationOrDeclaration of |CaseBlock|.
     </emu-alg>
-    <emu-grammar>CaseBlock : `{` CaseClauses? DefaultClause CaseClauses? `}`</emu-grammar>
-    <emu-alg>
-      1. TODO. This is going to be somewhat complicated.
-    </emu-alg>
-    <emu-grammar>CaseClauses : CaseClauses CaseClause</emu-grammar>
+    <emu-grammar>
+      CaseBlock :
+        `{` CaseClauses? DefaultClause CaseClauses? `}`
+    </emu-grammar>
     <emu-alg>
       1. TODO. This is going to be somewhat complicated.
     </emu-alg>
     <emu-grammar>
-      CaseClause : `case` Expression `:` StatementList?
+      CaseClauses :
+        CaseClauses CaseClause
+    </emu-grammar>
+    <emu-alg>
+      1. TODO. This is going to be somewhat complicated.
+    </emu-alg>
+    <emu-grammar>
+      CaseClause :
+        `case` Expression `:` StatementList?
 
-      DefaultClause : `default` `:` StatementList?
+      DefaultClause :
+        `default` `:` StatementList?
     </emu-grammar>
     <emu-alg>
       1. TODO. This is going to be somewhat complicated.
@@ -137,14 +160,145 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
       1. Return EndsInIterationOrDeclaration of |Catch| with arguments _labelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
-      TryStatement : `try` Block Finally
+      TryStatement :
+        `try` Block Finally
     </emu-grammar>
     <emu-alg>
       1. Return EndsInIterationOrDeclaration of |Block| with arguments _labelSet_ and _isLast_.
     </emu-alg>
-    <emu-grammar>Catch : `catch` `(` CatchParameter `)` Block</emu-grammar>
+    <emu-grammar>
+      Catch :
+        `catch` `(` CatchParameter `)` Block
+    </emu-grammar>
     <emu-alg>
       1. Return EndsInIterationOrDeclaration of |Block| with arguments _labelSet_ and _isLast_.
+    </emu-alg>
+  </emu-clause>
+
+  <emu-clause id="sec-isempty">
+    <h1>Static Semantics: IsEmpty</h1>
+    <p>With parameter _labelSet_.</p>
+    <emu-note>
+      <p>Here "empty" means "consisting solely of |EmptyStatement|s, |DebuggerStatement|s, |LabelledItem|s which immediately break themselves, or |BlockStatement|s which are themselves empty".</p>
+      <p>_labelSet_ is always empty when this SDO is invoked by other operations. It is used to track internally the labels which, if broken, would cause the statements being examined to be empty, as in `label: { break label; }`.</p>
+    </emu-note>
+    <emu-grammar>
+      StatementList :
+        StatementList StatementListItem
+    </emu-grammar>
+    <emu-alg>
+      1. If IsBreak of |StatementList| with argument _labelSet_ is *true*, return *true*.
+      1. If IsEmpty of |StatementListItem| with argument _labelSet_ is *false*, return *false*.
+      1. Return IsEmpty of |StatementList| with argument _labelSet_.
+    </emu-alg>
+    <emu-grammar>
+      Statement :
+        EmptyStatement
+        DebuggerStatement
+
+      Block :
+        `{` `}`
+    </emu-grammar>
+    <emu-alg>
+      1. Return *true*.
+    </emu-alg>
+    <emu-grammar>
+      StatementListItem :
+        Declaration
+
+      Statement :
+        VariableStatement
+        ExpressionStatement
+        IfStatement
+        BreakableStatement
+        ContinueStatement
+        ReturnStatement
+        WithStatement
+        ThrowStatement
+        TryStatement
+
+      BreakStatement :
+        `break` `;`
+
+      LabelledItem :
+        FunctionDeclaration
+    </emu-grammar>
+    <emu-alg>
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>
+      BreakStatement :
+        `break` |LabelIdentifier| `;`
+    </emu-grammar>
+    <emu-alg>
+      1. Let _label_ be the StringValue of |LabelIdentifier|.
+      1. If _label_ is an element of _labelSet_, return *true*.
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>
+      LabelledStatement :
+        LabelIdentifier `:` LabelledItem
+    </emu-grammar>
+    <emu-alg>
+      1. Let _label_ be the StringValue of |LabelIdentifier|.
+      1. Let _newLabelSet_ be a copy of _labelSet_ with _label_ appended.
+      1. Return IsEmpty of |LabelledItem| with argument _newLabelSet_.
+    </emu-alg>
+  </emu-clause>
+
+  <emu-clause id="sec-isbreak">
+    <h1>Static Semantics: IsBreak</h1>
+    <p>With parameter _labelSet_.</p>
+    <emu-note>
+      <p>This SDO answers the question "is the first non-empty statement in this Parse Node a |BreakStatement| for one of the labels in _labelSet_?".</p>
+    </emu-note>
+    <emu-grammar>
+      StatementList :
+        StatementList StatementListItem
+    </emu-grammar>
+    <emu-alg>
+      1. If IsBreak of |StatementList| with argument _labelSet_ is *true*, return *true*.
+      1. If IsEmpty of |StatementList| with argument &laquo; &raquo; is *false*, return *false*.
+      1. Return IsBreak of |StatementListItem| with argument _labelSet_.
+    </emu-alg>
+    <emu-grammar>
+      StatementListItem :
+        Declaration
+
+      Statement :
+        VariableStatement
+        EmptyStatement
+        ExpressionStatement
+        IfStatement
+        BreakableStatement
+        ContinueStatement
+        ReturnStatement
+        WithStatement
+        LabelledStatement
+        ThrowStatement
+        TryStatement
+        DebuggerStatement
+
+      BreakStatement :
+        `break` `;`
+
+      LabelledItem :
+        FunctionDeclaration
+
+      Block :
+        `{` `}`
+    </emu-grammar>
+    <emu-alg>
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>
+      BreakStatement :
+        `break` |LabelIdentifier| `;`
+    </emu-grammar>
+    <emu-alg>
+      1. Let _label_ be the StringValue of |LabelIdentifier|.
+      1. If _label_ is an element of _labelSet_, return *true*.
+      1. Return *false*.
     </emu-alg>
   </emu-clause>
 </emu-clause>
