@@ -42,6 +42,9 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         It is a Syntax Error if EndsInIterationOrDeclaration of |Block| with arguments &laquo; &raquo; and *true* is *true*.
       </li>
     </ul>
+    <emu-note type="editor">
+      <p>The first two Syntax Errors are present for all statement lists which are not immediately contained in other statement lists, i.e. for function bodies, scripts, modules, and now do expressions.</p>
+    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-endsiniterationordeclaration">
@@ -128,17 +131,43 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     </emu-alg>
     <emu-grammar>
       CaseBlock :
+        `{` CaseClauses `}`
+    </emu-grammar>
+    <emu-alg>
+      1. If _isLast_ is *true*, then
+        1. Let _newLabelSet_ be a copy of _labelSet_ with ~empty~ appended.
+      1. Else,
+        1. Let _newLabelSet_ be a copy of _labelSet_ with any occurences of ~empty~ removed.
+      1. Let _clauses_ be the List of |CaseClause| items in |CaseClauses|, in source text order.
+      1. For each element _clause_ of _clauses_, in reverse List order, do
+        1. If IsEmpty of _clause_ with argument &laquo; &raquo; is *false*, then
+          1. If EndsInIterationOrDeclaration of _clause_ with arguments _newLabelSet_ and _isLast_ is *true*, return *true*.
+          1. Set _isLast_ to *false*.
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>
+      CaseBlock :
         `{` CaseClauses? DefaultClause CaseClauses? `}`
     </emu-grammar>
     <emu-alg>
-      1. TODO. This is going to be somewhat complicated.
-    </emu-alg>
-    <emu-grammar>
-      CaseClauses :
-        CaseClauses CaseClause
-    </emu-grammar>
-    <emu-alg>
-      1. TODO. This is going to be somewhat complicated.
+      1. If _isLast_ is *true*, then
+        1. Let _newLabelSet_ be a copy of _labelSet_ with ~empty~ appended.
+      1. Else,
+        1. Let _newLabelSet_ be a copy of _labelSet_ with any occurences of ~empty~ removed.
+      1. If the first |CaseClauses| is present, then
+        1. Let _A_ be the List of |CaseClause| items in the first |CaseClauses|, in source text order.
+      1. Else,
+        1. Let _A_ be &laquo; &raquo;.
+      1. If the second |CaseClauses| is present, then
+        1. Let _B_ be the List of |CaseClause| items in the second |CaseClauses|, in source text order.
+      1. Else,
+        1. Let _B_ be &laquo; &raquo;.
+      1. Let _clauses_ be a List whose elements are the elements of _A_, followed by |DefaultClause|, followed by the elements of _B_.
+      1. For each element _clause_ of _clauses_, in reverse List order, do
+        1. If IsEmpty of _clause_ with argument &laquo; &raquo; is *false*, then
+          1. If EndsInIterationOrDeclaration of _clause_ with arguments _newLabelSet_ and _isLast_ is *true*, return *true*.
+          1. Set _isLast_ to *false*.
+      1. Return *false*.
     </emu-alg>
     <emu-grammar>
       CaseClause :
@@ -148,7 +177,8 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         `default` `:` StatementList?
     </emu-grammar>
     <emu-alg>
-      1. TODO. This is going to be somewhat complicated.
+      1. If |StatementList| is not present, return *false*.
+      1. Return EndsInIterationOrDeclaration of |StatementList| with arguments _labelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
       TryStatement :
@@ -217,13 +247,29 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         ThrowStatement
         TryStatement
 
-      BreakStatement :
-        `break` `;`
-
       LabelledItem :
         FunctionDeclaration
     </emu-grammar>
     <emu-alg>
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>
+      CaseClause :
+        `case` Expression `:` StatementList?
+
+      DefaultClause :
+        `default` `:` StatementList?
+    </emu-grammar>
+    <emu-alg>
+      1. If |StatementList| is not present, return *true*.
+      1. Return IsEmpty of |StatementList| with argument _labelSet_.
+    </emu-alg>
+    <emu-grammar>
+      BreakStatement :
+        `break` `;`
+    </emu-grammar>
+    <emu-alg>
+      1. If ~empty~ is an element of _labelSet_, return *true*.
       1. Return *false*.
     </emu-alg>
     <emu-grammar>
@@ -279,9 +325,6 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         TryStatement
         DebuggerStatement
 
-      BreakStatement :
-        `break` `;`
-
       LabelledItem :
         FunctionDeclaration
 
@@ -289,6 +332,14 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         `{` `}`
     </emu-grammar>
     <emu-alg>
+      1. Return *false*.
+    </emu-alg>
+    <emu-grammar>
+      BreakStatement :
+        `break` `;`
+    </emu-grammar>
+    <emu-alg>
+      1. If ~empty~ is an element of _labelSet_, return *true*.
       1. Return *false*.
     </emu-alg>
     <emu-grammar>
@@ -317,4 +368,5 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
   <h2>Semantics</h2>
   <p>TODO: thread VarDeclaredNames through the entire expression grammar.</p>
   <p>TODO: probably thread ContainsDuplicateLabels through the entire expression grammar.</p>
+  <p>TODO: ban do-exprs which are inside of formal parameter lists and which Contain a |VariableStatement|. Probably needs a new SDO, sigh. (Or, reconsider banning this, I guess.)</p>
 </emu-clause>
