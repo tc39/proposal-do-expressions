@@ -142,7 +142,10 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
       1. For each element _clause_ of _clauses_, in reverse List order, do
         1. If IsEmpty of _clause_ with argument &laquo; &raquo; is *false*, then
           1. If EndsInIterationOrDeclaration of _clause_ with arguments _newLabelSet_ and _isLast_ is *true*, return *true*.
-          1. Set _isLast_ to *false*.
+          1. If IsBreak of _clause_ with argument _newLabelSet_ is *true*, then
+            1. Set _isLast_ to *true*.
+          1. Else,
+            1. Set _isLast_ to *false*.
       1. Return *false*.
     </emu-alg>
     <emu-grammar>
@@ -335,6 +338,17 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
       1. Return *false*.
     </emu-alg>
     <emu-grammar>
+      CaseClause :
+        `case` Expression `:` StatementList?
+
+      DefaultClause :
+        `default` `:` StatementList?
+    </emu-grammar>
+    <emu-alg>
+      1. If |StatementList| is not present, return *false*.
+      1. Return IsBreak of |StatementList| with argument _labelSet_.
+    </emu-alg>
+    <emu-grammar>
       BreakStatement :
         `break` `;`
     </emu-grammar>
@@ -351,6 +365,13 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
       1. If _label_ is an element of _labelSet_, return *true*.
       1. Return *false*.
     </emu-alg>
+    <emu-grammar>
+      LabelledStatement :
+        LabelIdentifier `:` LabelledItem
+    </emu-grammar>
+    <emu-alg>
+      1. Return IsBreak of |LabelledItem| with argument _labelSet_.
+    </emu-alg>
   </emu-clause>
 </emu-clause>
 
@@ -366,7 +387,8 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
   </emu-grammar>
   <emu-note><p>Note the additional lookahead for `do` in ExpressionStatements. This prevents using `do` expressions in statement position, where they are ambiguous with `do` statements.</p></emu-note>
   <h2>Semantics</h2>
-  <p>TODO: thread VarDeclaredNames through the entire expression grammar.</p>
+  <p>TODO: thread VarDeclaredNames through the entire expression grammar and update existing uses (|IfStatement| etc) to use it.</p>
   <p>TODO: probably thread ContainsDuplicateLabels through the entire expression grammar.</p>
   <p>TODO: ban do-exprs which are inside of formal parameter lists and which Contain a |VariableStatement|. Probably needs a new SDO, sigh. (Or, reconsider banning this, I guess.)</p>
+  <p>Maybe it is worth abstracting out a single "CollectDoExpressionsFromExpression" SDO that other things can be written in terms of.</p>
 </emu-clause>
