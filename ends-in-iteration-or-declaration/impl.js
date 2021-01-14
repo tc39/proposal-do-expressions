@@ -1,9 +1,7 @@
 'use strict';
 
 let program = `
-try {
-
-} catch (e) {
+foo: {
   switch (0) {
     case 0:
       while (false);
@@ -11,20 +9,10 @@ try {
       // fall through
     }
     case 1:
-      break;
+      break foo;
   }
-
-
-  foo: {
-    bar: {
-      break bar;
-    }
-    42;
-  }
-} finally {
   42;
 }
-
 `;
 
 let ast = require('shift-parser').parseScript(program);
