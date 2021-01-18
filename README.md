@@ -142,7 +142,7 @@ would be disallowed. This is in contrast to
 ```js
 label: {
   function inner(){
-    label ;
+    label: ;
   }
 }
 ```
@@ -150,7 +150,7 @@ which is legal. This is prohibited because it's confusing, and as a bonus it wou
 
 ### Conflict with `do-while`
 
-`do` expressions are prohibited in contexts in which statements are legal. In such contexts you can just use a normal block.
+`do` expressions are prohibited in contexts in which statements are legal. In such contexts you can just use a normal block or enclose the `do` expression in parentheses.
 
 ### B.3.3 function hoisting
 
