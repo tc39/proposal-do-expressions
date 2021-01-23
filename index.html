@@ -1986,7 +1986,7 @@ li.menu-search-result-term:before {
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>If <var>isLast</var> is <emu-val>true</emu-val>, then<ol><li>Let <var>label</var> be the StringValue of <emu-nt><a href="https://tc39.es/ecma262/#prod-LabelIdentifier">LabelIdentifier</a></emu-nt>.</li><li>Let <var>newLabelSet</var> be a copy of <var>labelSet</var> with <var>label</var> appended.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_27"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>newLabelSet</var> and <emu-val>true</emu-val>.</li></ol></li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_28"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>LabelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>If <var>isLast</var> is <emu-val>true</emu-val>, then<ol><li>Let <var>label</var> be the StringValue of <emu-nt><a href="https://tc39.es/ecma262/#prod-LabelIdentifier">LabelIdentifier</a></emu-nt>.</li><li>Let <var>newLabelSet</var> be a copy of <var>labelSet</var> with <var>label</var> appended.</li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_27"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>newLabelSet</var> and <emu-val>true</emu-val>.</li></ol></li><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_28"><a href="#prod-LabelledItem">LabelledItem</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="SwitchStatement" id="prod-SwitchStatement">
     <emu-nt><a href="#prod-SwitchStatement">SwitchStatement</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="515acffe">
         <emu-t>switch</emu-t>
@@ -1997,7 +1997,7 @@ li.menu-search-result-term:before {
     </emu-rhs>
 </emu-production>
 </emu-grammar>
-    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_30"><a href="#prod-CaseBlock">CaseBlock</a></emu-nt> with arguments <var>LabelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
+    <emu-alg><ol><li>Return EndsInIterationOrDeclaration of <emu-nt id="_ref_30"><a href="#prod-CaseBlock">CaseBlock</a></emu-nt> with arguments <var>labelSet</var> and <var>isLast</var>.</li></ol></emu-alg>
     <emu-grammar><emu-production name="CaseBlock" id="prod-CaseBlock">
     <emu-nt><a href="#prod-CaseBlock">CaseBlock</a></emu-nt> <emu-geq>:</emu-geq> <emu-rhs a="11eac196">
         <emu-t>{</emu-t>

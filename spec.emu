@@ -120,14 +120,14 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         1. Let _label_ be the StringValue of |LabelIdentifier|.
         1. Let _newLabelSet_ be a copy of _labelSet_ with _label_ appended.
         1. Return EndsInIterationOrDeclaration of |LabelledItem| with arguments _newLabelSet_ and *true*.
-      1. Return EndsInIterationOrDeclaration of |LabelledItem| with arguments _LabelSet_ and _isLast_.
+      1. Return EndsInIterationOrDeclaration of |LabelledItem| with arguments _labelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
       SwitchStatement :
         `switch` `(` Expression `)` CaseBlock
     </emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |CaseBlock| with arguments _LabelSet_ and _isLast_.
+      1. Return EndsInIterationOrDeclaration of |CaseBlock| with arguments _labelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
       CaseBlock :
