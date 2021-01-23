@@ -127,7 +127,7 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
         `switch` `(` Expression `)` CaseBlock
     </emu-grammar>
     <emu-alg>
-      1. Return EndsInIterationOrDeclaration of |CaseBlock|.
+      1. Return EndsInIterationOrDeclaration of |CaseBlock| with arguments _LabelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
       CaseBlock :
