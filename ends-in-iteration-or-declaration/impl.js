@@ -5,6 +5,7 @@ foo: {
   switch (0) {
     case 0:
       while (false);
+    default:
     case 2: {
       // fall through
     }
@@ -121,6 +122,27 @@ function EndsInIterationOrDeclaration(node, labelSet, isLast) {
         }
       }
       return false;
+    }
+    case 'SwitchStatementWithDefault': {
+      let newLabelSet;
+      if (isLast) {
+        newLabelSet = labelSet.concat([EMPTY]);
+      } else {
+        newLabelSet = labelSet.filter(l => l !== EMPTY);
+      }
+      let clauses = [...node.preDefaultCases, node.defaultCase, ...node.postDefaultCases];
+      for (let clause of clauses.reverse()) {
+        if (!IsEmpty(clause, [])) {
+          if (EndsInIterationOrDeclaration(clause, newLabelSet, isLast)) {
+            return true;
+          }
+          if (IsBreak(clause, newLabelSet)) {
+            isLast = true;
+          } else {
+            isLast = false;
+          }
+        }
+      }
     }
     case 'SwitchCase':
     case 'SwitchDefault': {
