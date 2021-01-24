@@ -169,7 +169,10 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
       1. For each element _clause_ of _clauses_, in reverse List order, do
         1. If IsEmpty of _clause_ with argument &laquo; &raquo; is *false*, then
           1. If EndsInIterationOrDeclaration of _clause_ with arguments _newLabelSet_ and _isLast_ is *true*, return *true*.
-          1. Set _isLast_ to *false*.
+          1. If IsBreak of _clause_ with argument _newLabelSet_ is *true*, then
+            1. Set _isLast_ to *true*.
+          1. Else,
+            1. Set _isLast_ to *false*.
       1. Return *false*.
     </emu-alg>
     <emu-grammar>
