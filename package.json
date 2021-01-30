@@ -1,10 +1,10 @@
 {
 	"name": "ecma-proposal-do-expressions",
 	"version": "0.0.0",
+	"private": true,
 	"description": "ECMAScript spec proposal for `do`",
 	"scripts": {
-		"build": "ecmarkup spec.emu | js-beautify -f - --type=html -t > index.html",
-		"prepublish": "npm run build && echo >&2 'no publishing' && exit 255"
+		"build": "ecmarkup --strict --verbose spec.emu > index.html"
 	},
 	"repository": {
 		"type": "git",
@@ -28,7 +28,6 @@
 	"homepage": "https://github.com/tc39/proposal-do-expressions#readme",
 	"dependencies": {},
 	"devDependencies": {
-		"ecmarkup": "^3.16.0",
-		"js-beautify": "^1.8.6"
+		"ecmarkup": "^4.2.3"
 	}
 }

@@ -1,5 +1,7 @@
 # ECMAScript proposal: `do` expressions
 
+This proposal has [preliminary spec text](https://bakkot.github.io/do-expressions-v2/).
+
 ## Status
 
 This proposal is in **stage 1** of [the TC39 process](https://tc39.github.io/process-document/).
@@ -49,20 +51,109 @@ return (
 )
 ```
 
-## Tennant's Correspondence Principle
+## Limitations
 
-* key refactoring principles:
-  * `do { <expr>; }` equivalent to `<expr>`
-  * `(do { <stmt> };)` equivalent to `{ <stmt> }`
-* this semantic transparency is demonstrated by the semantics:
-  1. Return the result of evaluating _Body_.
-
-## Further considerations
-
-How to avoid either parsing conflict in statement context with `do`-`while`, or dangling-else type of ambiguity:
+Because of the potential for confusion, you can't end a do-expression with a declaration or a loop (even when nested in other statements). For example, the following are all Early Errors:
 
 ```js
-do do f(); while (x);
+(do {
+  let x = 1;
+});
 ```
 
-I have several alternatives I intend to explore here.
+```js
+(do {
+  function f() {}
+});
+```
+
+```js
+(do {
+  while (cond) {
+    // do something
+  }
+});
+```
+
+```js
+(do {
+  if (condition) {
+    while (inner) {
+      // do something
+    }
+  } else {
+    42;
+  }
+});
+```
+
+```js
+(do {
+  label: {
+    let x = 1;
+    break label;
+  }
+});
+```
+
+More formally, the completion value of the _StatementList_ can't rely on the completion value of a loop or declaration. See EndsInIterationOrDeclaration in the proposed specification for details.
+
+The restriction on declarations is particularly unfortunate. It arises from the fact that declarations have `~empty~` as their completion value, meaning `do { 'before'; let x = 'after'; }` would evaluate to `before`. I'd like to pursue changing the completion value for declarations in general, which would affect existing code relying on `eval`.
+
+## Edge cases
+
+### `var` declarations
+
+`var` declarations are allowed (except as the final statement), with the binding hoisting to the containing function's scope. Exception: `var` declarations are an Early Error when the `do` occurs in a parameter expression.
+
+### Empty `do`
+
+`do {}` is allowed and is equivalent to `void 0`.
+
+### `await`/`yield`
+
+The ability to use `await` and `yield` is inherited from the context of the enclosing function, as it is in any other expression.
+
+#### But doesn't `yield` let you `return`?
+
+Technically, yes, with coordination from outside of the called function. But this is a fairly obscure corner of the language; I am very hesitant to reason from its example.
+
+### `throw`
+
+Works fine. Does what you expect.
+
+### `break`/`continue`/`return`
+
+These are not allowed to cross the boundary of the `do`. (It's an Early Error if you try.)
+
+#### Duplicate labels
+
+```js
+label: {
+  (do {
+    label: ;
+  });
+}
+```
+would be disallowed. This is in contrast to
+
+```js
+label: {
+  function inner(){
+    label: ;
+  }
+}
+```
+which is legal. This is prohibited because it's confusing, and as a bonus it would leave room for relaxing the restriction on `break`/`continue` in the future.
+
+### Conflict with `do-while`
+
+`do` expressions are prohibited in contexts in which statements are legal. In such contexts you can just use a normal block or enclose the `do` expression in parentheses.
+
+### `if` without `else`
+
+An `if` statement without an `else` is allowed as the final statement of the `do`. If the test is not met, the `do` resolves to `undefined`, just as would happen if there were an empty `else`.
+
+### B.3.3 function hoisting
+
+Sloppy-mode function hoisting is not allowed to pass through a do-expression.
