@@ -1,6 +1,6 @@
 # ECMAScript proposal: `do` expressions
 
-This proposal has [preliminary spec text](https://bakkot.github.io/do-expressions-v2/).
+This proposal has [preliminary spec text](https://tc39.github.io/proposal-do-expressions/).
 
 ## Status
 
