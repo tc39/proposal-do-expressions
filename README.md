@@ -1,7 +1,5 @@
 # ECMAScript proposal: `do` expressions
 
-NOTE: This is a fork of the [original proposal](https://github.com/tc39/proposal-do-expressions/). If this advances to stage 2, it will be upstreamed into that repository.
-
 This proposal has [preliminary spec text](https://bakkot.github.io/do-expressions-v2/).
 
 ## Status
@@ -151,6 +149,10 @@ which is legal. This is prohibited because it's confusing, and as a bonus it wou
 ### Conflict with `do-while`
 
 `do` expressions are prohibited in contexts in which statements are legal. In such contexts you can just use a normal block or enclose the `do` expression in parentheses.
+
+### `if` without `else`
+
+An `if` statement without an `else` is allowed as the final statement of the `do`. If the test is not met, the `do` resolves to `undefined`, just as would happen if there were an empty `else`.
 
 ### B.3.3 function hoisting
 
