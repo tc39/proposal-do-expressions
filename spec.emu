@@ -15,8 +15,8 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
   <h1>Do Expressions</h1>
   <h2>Syntax</h2>
   <emu-grammar type="definition">
-    DoExpression[Yield, Await] :
-      `do` Block[?Yield, ?Await, ~Return]
+    DoExpression[Yield, Await, Return] :
+      `do` Block[?Yield, ?Await, ?Return]
   </emu-grammar>
 
   <emu-clause id="sec-doexpression-runtime-semantics-evaluation">
@@ -33,18 +33,12 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     <emu-grammar>DoExpression: `do` Block</emu-grammar>
     <ul>
       <li>
-        It is a Syntax Error if ContainsUndefinedBreakTarget of |Block| with argument &laquo; &raquo; is *true*.
-      </li>
-      <li>
-        It is a Syntax Error if ContainsUndefinedContinueTarget of |Block| with arguments &laquo; &raquo; and &laquo; &raquo; is *true*.
+        TODO: a syntax error for this is contained in a loop head and contains a break or continue which would break or continue the loop.
       </li>
       <li>
         It is a Syntax Error if EndsInIterationOrDeclaration of |Block| with arguments &laquo; &raquo; and *true* is *true*.
       </li>
     </ul>
-    <emu-note type="editor">
-      <p>The first two Syntax Errors are present for all statement lists which are not immediately contained in other statement lists, i.e. for function bodies, scripts, modules, and now do expressions.</p>
-    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-endsiniterationordeclaration">
@@ -390,35 +384,12 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
   </emu-grammar>
   <emu-note><p>Note the additional lookahead for `do` in ExpressionStatements. This prevents using `do` expressions in statement position, where they are ambiguous with `do` statements.</p></emu-note>
   <h2>Semantics</h2>
+  <p>TODO: thread the Return grammar parameter through the entire expression grammar. It is allowed in parameter lists and arrow expression bodies, but not class bodies. In other circumstances it's inherited from the containing statement.</p>
+  <p>TODO: thread ContainsUndefinedBreakTarget and ContainsUndefinedContinueTarget through the entire expression grammar.</p>
   <p>TODO: thread VarDeclaredNames through the entire expression grammar and update existing uses (|IfStatement| etc) to use it.</p>
-  <p>TODO: probably thread ContainsDuplicateLabels through the entire expression grammar.</p>
+  <p>TODO: thread ContainsDuplicateLabels through the entire expression grammar.</p>
   <p>TODO: ban do-exprs which are inside of formal parameter lists and which Contain a |VariableStatement|. Probably needs a new SDO, sigh. (Or, reconsider banning this, I guess.)</p>
   <p>Maybe it is worth abstracting out a single "CollectDoExpressionsFromExpression" SDO that other things can be written in terms of.</p>
-
-  <h2>Early Errors</h2>
-  <emu-clause id="sec-ins-continue-statement-static-semantics-early-errors">
-  <h1>Static Semantics: Early Errors</h1>
-  <emu-grammar>
-    ContinueStatement :
-      `continue` `;`
-      `continue` LabelIdentifier `;`
-  </emu-grammar>
-  <ul>
-    <li>
-      It is a Syntax Error if this |ContinueStatement| is not nested, directly or indirectly (but not crossing function <ins>or `do`-expression</ins> boundaries), within an |IterationStatement|.
-    </li>
-  </ul>
-  <emu-clause id="sec-ins-break-statement-static-semantics-early-errors">
-    <h1>Static Semantics: Early Errors</h1>
-    <emu-grammar>BreakStatement : `break` `;`</emu-grammar>
-    <ul>
-      <li>
-        It is a Syntax Error if this |BreakStatement| is not nested, directly or indirectly (but not crossing function <ins>or `do`-expression</ins> boundaries), within an |IterationStatement| or a |SwitchStatement|.
-      </li>
-    </ul>
-  </emu-clause>
-
-
 </emu-clause>
 
 </emu-clause>
