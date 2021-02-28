@@ -114,37 +114,32 @@ The restriction on declarations is particularly unfortunate. It arises from the 
 
 The ability to use `await` and `yield` is inherited from the context of the enclosing function, as it is in any other expression.
 
-#### But doesn't `yield` let you `return`?
-
-Technically, yes, with coordination from outside of the called function. But this is a fairly obscure corner of the language; I am very hesitant to reason from its example.
-
 ### `throw`
 
 Works fine. Does what you expect.
 
 ### `break`/`continue`/`return`
 
-These are not allowed to cross the boundary of the `do`. (It's an Early Error if you try.)
-
-#### Duplicate labels
+These are allowed when in an appropriate context: `return` is allowed when the `do` is within a function, `break` is allowed when within a loop or a switch case, etc. This allows you to write code like this:
 
 ```js
-label: {
-  (do {
-    label: ;
-  });
+function getUserId(blob) {
+  let obj = do {
+    try {
+      JSON.parse(blob)
+    } catch {
+      return null; // returns from the function
+    }
+  };
+  return obj?.userId;
 }
 ```
-would be disallowed. This is in contrast to
 
-```js
-label: {
-  function inner(){
-    label: ;
-  }
-}
-```
-which is legal. This is prohibited because it's confusing, and as a bonus it would leave room for relaxing the restriction on `break`/`continue` in the future.
+#### Exceptions
+
+Because of the potential for confusion, unlabeled `break` and `continue` are not allowed within the head of a loop, whether or not the loop is within another loop.
+
+`return` is allowed even within function parameter lists, as in `function f(x = do { return null; }) {}`. It is not allowed in computed property names in class bodies.
 
 ### Conflict with `do-while`
 
