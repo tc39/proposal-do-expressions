@@ -53,7 +53,7 @@ return (
 
 ## Limitations
 
-Because of the potential for confusion, you can't end a do-expression with a declaration or a loop (even when nested in other statements). For example, the following are all Early Errors:
+Because of the potential for confusion, you can't end a do-expression with a declaration, an `if` without an `else`, or a loop (even when nested in other statements). For example, the following are all Early Errors:
 
 ```js
 (do {
@@ -95,6 +95,15 @@ Because of the potential for confusion, you can't end a do-expression with a dec
   }
 });
 ```
+
+```js
+(do {
+  if (foo) {
+    bar
+  }
+});
+```
+
 
 More formally, the completion value of the _StatementList_ can't rely on the completion value of a loop or declaration. See EndsInIterationOrDeclaration in the proposed specification for details.
 
@@ -144,10 +153,6 @@ Because of the potential for confusion, unlabeled `break` and `continue` are not
 ### Conflict with `do-while`
 
 `do` expressions are prohibited in contexts in which statements are legal. In such contexts you can just use a normal block or enclose the `do` expression in parentheses.
-
-### `if` without `else`
-
-An `if` statement without an `else` is allowed as the final statement of the `do`. If the test is not met, the `do` resolves to `undefined`, just as would happen if there were an empty `else`.
 
 ### B.3.3 function hoisting
 
