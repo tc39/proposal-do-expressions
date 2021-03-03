@@ -2,15 +2,8 @@
 
 let program = `
 foo: {
-  switch (0) {
-    case 0:
-      while (false);
-    default:
-    case 2: {
-      // fall through
-    }
-    case 1:
-      break foo;
+  for (let i = 0; i < 2; ++i) {
+    break foo;
   }
   42;
 }
@@ -50,13 +43,21 @@ function EndsInIterationOrDeclaration(node, labelSet, isLast) {
   switch (node.type) {
     case 'VariableDeclarationStatement':
     case 'FunctionDeclaration':
-    case 'ClassDeclaration':
+    case 'ClassDeclaration': {
+      return isLast;
+    }
     case 'WhileStatement':
     case 'DoWhileStatement':
     case 'ForStatement':
     case 'ForInStatement':
     case 'ForOfStatement': {
-      return isLast;
+      if (isLast) {
+        return true;
+      }
+      if (IsBreak(node.body, labelSet)) {
+        return true;
+      }
+      return EndsInIterationOrDeclaration(node.body, labelSet, false);
     }
     case 'EmptyStatement':
     case 'ExpressionStatement':

@@ -63,12 +63,35 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
 
       LabelledItem :
         FunctionDeclaration
-
-      BreakableStatement :
-        IterationStatement
     </emu-grammar>
     <emu-alg>
       1. Return _isLast_.
+    </emu-alg>
+    <emu-grammar>
+      DoWhileStatement : `do` Statement `while` `(` Expression `)` `;`
+
+      WhileStatement : `while` `(` Expression `)` Statement
+
+      ForStatement :
+        `for` `(` Expression? `;` Expression? `;` Expression? `)` Statement
+        `for` `(` `var` VariableDeclarationList `;` Expression? `;` Expression? `)` Statement
+        `for` `(` LexicalDeclaration Expression? `;` Expression? `)` Statement
+
+      ForInOfStatement :
+        `for` `(` LeftHandSideExpression `in` Expression `)` Statement
+        `for` `(` `var` ForBinding `in` Expression `)` Statement
+        `for` `(` ForDeclaration `in` Expression `)` Statement
+        `for` `(` LeftHandSideExpression `of` AssignmentExpression `)` Statement
+        `for` `(` `var` ForBinding `of` AssignmentExpression `)` Statement
+        `for` `(` ForDeclaration `of` AssignmentExpression `)` Statement
+        `for` `await` `(` LeftHandSideExpression `of` AssignmentExpression `)` Statement
+        `for` `await` `(` `var` ForBinding `of` AssignmentExpression `)` Statement
+        `for` `await` `(` ForDeclaration `of` AssignmentExpression `)` Statement
+    </emu-grammar>
+    <emu-alg>
+      1. If _isLast_ is *true*, return *true*.
+      1. If IsBreak of |Statement| with argument _labelSet_ is *true*, return *true*.
+      1. Return EndsInIterationOrBareIfOrDeclaration of |Statement| with arguments _labelSet_ and _isLast_.
     </emu-alg>
     <emu-grammar>
       Statement :
@@ -302,6 +325,9 @@ contributors: Dave Herman, Chris Krychom, Kevin Gibbons
     <p>With parameter _labelSet_.</p>
     <emu-note>
       <p>This SDO answers the question "is the first non-empty statement in this Parse Node a |BreakStatement| for one of the labels in _labelSet_?". It will recurse into |BlockStatement|s but not other kinds of statement-containing statements.</p>
+    </emu-note>
+    <emu-note type="editor">
+      <p>TODO: now that we allow break/continue in do expressions, this needs to be updated to check every expression position in every statement to see if it has a |DoExpression| which contains a break for one of the items in _labelSet_.</p>
     </emu-note>
     <emu-grammar>
       StatementList :
