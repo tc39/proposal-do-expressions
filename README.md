@@ -17,7 +17,7 @@ Write in an expression-oriented style, scoping variables as locally as possible:
 
 ```js
 let x = do {
-  let tmp = f();
+  let tmp = expensiveWork();
   tmp * tmp + 1
 };
 ```
