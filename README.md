@@ -1,5 +1,7 @@
 # ECMAScript proposal: `do` expressions
 
+![Stage 1](https://badges.aleen42.com/src/tc39_2.svg)
+
 This proposal has [preliminary spec text](https://tc39.github.io/proposal-do-expressions/).
 
 ## Status
